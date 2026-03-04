@@ -1,14 +1,8 @@
 "use client";
-import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Link from 'next/link';
 import Image from 'next/image';
 import type { HomeSectionRow } from '@/types/home-section';
 import { useLanguage } from '@/context/LanguageContext';
-
-gsap.registerPlugin(ScrollTrigger);
-
 
 type Props = { data?: HomeSectionRow | null };
 
@@ -33,10 +27,13 @@ const DEFAULTS = {
   ],
 };
 
+// CSS animation delays for staggered entrance — runs immediately on first paint,
+// no JS needed, LCP-friendly (elements are visible from the start in the DOM,
+// animation-fill-mode: both keeps them invisible only during the delay, then
+// transitions them in once the delay expires — fully CSS-driven).
+const ANIM_DELAYS = ['0.05s', '0.2s', '0.35s', '0.5s', '0.65s', '0.8s'];
+
 export default function Hero({ data }: Props) {
-  const sectionRef = useRef<HTMLElement>(null);
-  const imageRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
   const { t } = useLanguage();
 
   const image = data?.image ?? DEFAULTS.image;
@@ -51,27 +48,17 @@ export default function Hero({ data }: Props) {
   const stats = extras.stats ?? DEFAULTS.stats;
   const titleLines = rawTitle.split('\n').filter(Boolean);
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ delay: 0.2 });
-      if (imageRef.current) {
-        tl.fromTo(imageRef.current, { scale: 1.08, opacity: 0 }, { scale: 1, opacity: 1, duration: 1.4, ease: 'power2.out' }, 0);
-      }
-      if (contentRef.current) {
-        tl.fromTo(contentRef.current.querySelectorAll('.anim-line'),
-          { y: 60, opacity: 0 },
-          { y: 0, opacity: 1, duration: 1, stagger: 0.12, ease: 'power3.out' },
-          0.3
-        );
-      }
-    });
-    return () => ctx.revert();
-  }, []);
+  // Assign stagger delays sequentially
+  let delayIdx = 0;
+  const nextDelay = () => ANIM_DELAYS[Math.min(delayIdx++, ANIM_DELAYS.length - 1)];
 
   return (
-    <section ref={sectionRef} className="relative min-h-screen flex items-center overflow-hidden bg-frogs-dark">
-      {/* Background */}
-      <div ref={imageRef} className="absolute inset-0" style={{ willChange: 'transform, opacity' }}>
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-frogs-dark">
+      {/* Background — CSS fade/scale in, composited (no reflow) */}
+      <div
+        className="absolute inset-0"
+        style={{ animation: 'hero-bg-in 1.4s ease-out forwards' }}
+      >
         <Image
           src={image}
           alt={`The Frogs Guesthouse - ${label}`}
@@ -84,21 +71,40 @@ export default function Hero({ data }: Props) {
         <div className="absolute inset-0 bg-gradient-to-r from-frogs-dark/70 to-transparent" />
       </div>
 
-
-      {/* Content */}
-      <div ref={contentRef} className="relative z-10 px-6 lg:px-16 max-w-7xl mx-auto w-full pt-24 pb-16">
-        <span className="anim-line label-micro text-frogs-gold mb-6 block">{label}</span>
+      {/* Content — CSS staggered entrance, each element is in DOM immediately (LCP-friendly) */}
+      <div className="relative z-10 px-6 lg:px-16 max-w-7xl mx-auto w-full pt-24 pb-16">
+        <span
+          className="label-micro text-frogs-gold mb-6 block"
+          style={{ animation: `hero-line-in 0.9s ease-out ${nextDelay()} both` }}
+        >
+          {label}
+        </span>
 
         <h1 className="font-display text-display text-frogs-text-light mb-8">
           {titleLines.map((line: string, i: number) => (
-            <span key={i} className="anim-line block">{line}</span>
+            <span
+              key={i}
+              className="block"
+              style={{ animation: `hero-line-in 0.9s ease-out ${nextDelay()} both` }}
+            >
+              {line}
+            </span>
           ))}
         </h1>
 
-        <p className="anim-line font-body text-xl text-frogs-text-light/80 max-w-lg mb-12 leading-relaxed">{body}</p>
+        <p
+          className="font-body text-xl text-frogs-text-light/80 max-w-lg mb-12 leading-relaxed"
+          style={{ animation: `hero-line-in 0.9s ease-out ${nextDelay()} both` }}
+        >
+          {body}
+        </p>
 
         {/* Stats */}
-        <div className="anim-line flex items-center gap-8 mb-12" aria-label="Quick statistics">
+        <div
+          className="flex items-center gap-8 mb-12"
+          aria-label="Quick statistics"
+          style={{ animation: `hero-line-in 0.9s ease-out ${nextDelay()} both` }}
+        >
           {stats.map((stat, i) => (
             <div key={i} className="text-center">
               <span className="font-display text-4xl text-frogs-gold">{stat.value}</span>
@@ -110,7 +116,10 @@ export default function Hero({ data }: Props) {
         </div>
 
         {/* CTAs */}
-        <div className="anim-line flex flex-wrap gap-4">
+        <div
+          className="flex flex-wrap gap-4"
+          style={{ animation: `hero-line-in 0.9s ease-out ${nextDelay()} both` }}
+        >
           {ctaUrl && ctaLabel && (
             <a
               href={ctaUrl}
@@ -127,6 +136,18 @@ export default function Hero({ data }: Props) {
           )}
         </div>
       </div>
+
+      {/* Keyframes inlined — available immediately, no JS execution needed */}
+      <style>{`
+        @keyframes hero-bg-in {
+          from { opacity: 0; transform: scale(1.08); }
+          to   { opacity: 1; transform: scale(1); }
+        }
+        @keyframes hero-line-in {
+          from { opacity: 0; transform: translateY(40px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
     </section>
   );
 }

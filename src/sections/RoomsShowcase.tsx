@@ -33,8 +33,8 @@ export default function RoomsShowcase({ data, dbRooms }: Props) {
   const headingRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const [activeRoom, setActiveRoom] = useState<number | null>(null);
-  const mousePos = useRef({ x: 0, y: 0 });
   const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
+
   const { t } = useLanguage();
 
   const label = t(data?.labelEN ?? 'ACCOMMODATIONS', data?.labelEL ?? 'ΚΑΤΑΛΥΜΑΤΑ');
@@ -91,28 +91,44 @@ export default function RoomsShowcase({ data, dbRooms }: Props) {
     return () => ctx.revert();
   }, []);
 
-  // Mouse follow effect for images
+  // Mouse follow effect — RAF-throttled to avoid forced reflows on every pixel
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      mousePos.current = { x: e.clientX, y: e.clientY };
+    const section = sectionRef.current;
+    if (!section) return;
 
-      // Animate active image to follow mouse with smooth easing
-      if (activeRoom !== null && imageRefs.current[activeRoom]) {
-        const img = imageRefs.current[activeRoom];
-        if (img) {
-          gsap.to(img, {
-            x: e.clientX - 250,
-            y: e.clientY - 175,
-            duration: 0.6,
-            ease: 'power3.out',
-          });
+    let rafId: number | null = null;
+    let latestX = 0;
+    let latestY = 0;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      latestX = e.clientX;
+      latestY = e.clientY;
+
+      // Only schedule one RAF per frame — cancel any pending one
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame(() => {
+        rafId = null;
+        if (activeRoom !== null && imageRefs.current[activeRoom]) {
+          const img = imageRefs.current[activeRoom];
+          if (img) {
+            gsap.to(img, {
+              x: latestX - 250,
+              y: latestY - 175,
+              duration: 0.6,
+              ease: 'power3.out',
+            });
+          }
         }
-      }
+      });
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    section.addEventListener('mousemove', handleMouseMove);
+    return () => {
+      section.removeEventListener('mousemove', handleMouseMove);
+      if (rafId !== null) cancelAnimationFrame(rafId);
+    };
   }, [activeRoom]);
+
 
   const handleRoomEnter = (index: number) => {
     setActiveRoom(index);

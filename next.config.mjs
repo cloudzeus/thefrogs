@@ -2,33 +2,11 @@
 const nextConfig = {
   output: "standalone",
   images: {
-    formats: ["image/avif", "image/webp"],
-    remotePatterns: [
-      // Bunny CDN — primary image storage
-      {
-        protocol: "https",
-        hostname: "thefrogs.b-cdn.net",
-      },
-      // Bunny CDN wildcard for any zone subdomains
-      {
-        protocol: "https",
-        hostname: "*.b-cdn.net",
-      },
-      // Bunny Storage direct
-      {
-        protocol: "https",
-        hostname: "storage.bunnycdn.com",
-      },
-      // UploadThing (fallback, if any older assets exist)
-      {
-        protocol: "https",
-        hostname: "utfs.io",
-      },
-      {
-        protocol: "https",
-        hostname: "*.ufs.sh",
-      },
-    ],
+    // Bunny CDN already serves images from edge nodes globally.
+    // Next.js on-demand optimization adds cold-start latency (500ms–2s per image)
+    // because it must fetch from CDN, convert, cache on the VPS — hurting real users.
+    // All other perf gains (fonts, CSS animations, lazy loading, RAF throttle) are preserved.
+    unoptimized: true,
   },
   eslint: {
     ignoreDuringBuilds: true,
@@ -38,4 +16,5 @@ const nextConfig = {
   },
 };
 export default nextConfig;
+
 
