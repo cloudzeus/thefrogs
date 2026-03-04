@@ -1,0 +1,344 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  firstName     String?
+  lastName      String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  role          String    @default("USER") // ADMIN, USER
+  accounts      Account[]
+  sessions      Session[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// ================================================================
+// HOTEL MODELS
+// ================================================================
+
+model Room {
+  id            String   @id @default(cuid())
+  name          String   @db.VarChar(255)
+  nameEL        String?  @db.VarChar(255)
+  nameEN        String?  @db.VarChar(255)
+  slug          String   @unique @db.VarChar(255)
+  descriptionEL String?  @db.LongText
+  descriptionEN String?  @db.LongText
+  sleeps        Int      @default(2)
+  squareMeters  Int?
+  startingFrom  Decimal? @db.Decimal(10, 2)
+  featuredImage String?  @db.Text
+  published     Boolean  @default(true)
+  order         Int      @default(0)
+
+  images       RoomImage[]
+  amenities    RoomAmenity[]
+  facilities   RoomFacility[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model RoomImage {
+  id        String   @id @default(cuid())
+  roomId    String
+  room      Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  url       String   @db.Text
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model RoomAmenity {
+  id            String  @id @default(cuid())
+  roomId        String
+  room          Room    @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  nameEL        String  @db.VarChar(255)
+  nameEN        String? @db.VarChar(255)
+  descriptionEL String? @db.Text
+  descriptionEN String? @db.Text
+  icon          String? @db.VarChar(100)
+  order         Int     @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model RoomFacility {
+  id            String  @id @default(cuid())
+  roomId        String
+  room          Room    @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  nameEL        String  @db.VarChar(255)
+  nameEN        String? @db.VarChar(255)
+  descriptionEL String? @db.Text
+  descriptionEN String? @db.Text
+  icon          String? @db.VarChar(100)
+  order         Int     @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Testimonial {
+  id        String   @id @default(cuid())
+  author    String
+  text      String   @db.Text
+  rating    Int      @default(5)
+  published Boolean  @default(true)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model GalleryImage {
+  id        String   @id @default(cuid())
+  url       String   @db.Text
+  title     String?
+  category  String?
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Media {
+  id        String   @id @default(cuid())
+  type      String   @default("IMAGE") // IMAGE, VIDEO
+  url       String   @db.Text
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model GuestDirectory {
+  id            String   @id @default(cuid())
+  titleEL       String   @db.VarChar(255)
+  titleEN       String?  @db.VarChar(255)
+  descriptionEL String?  @db.LongText
+  descriptionEN String?  @db.LongText
+  order         Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Poi {
+  id                 String   @id @default(cuid())
+  slug               String   @unique @db.VarChar(255)
+  category           String?  @db.VarChar(100) // e.g. Archaeological, Museum, Neighborhood, Nightlife, Nature, Square
+  titleEL            String   @db.VarChar(255)
+  titleEN            String?  @db.VarChar(255)
+  subtitleEL         String?  @db.VarChar(255)
+  subtitleEN         String?  @db.VarChar(255)
+  shortDescriptionEL String?  @db.Text
+  shortDescriptionEN String?  @db.Text
+  descriptionEL      String?  @db.LongText
+  descriptionEN      String?  @db.LongText
+  featuredImage      String?  @db.Text
+  latitude           Float?
+  longitude          Float?
+  order              Int      @default(0)
+  tags               Json?    @default("[]") // string[] e.g. ["Archaeological", "Museum"]
+
+  media       PoiMedia[]
+  visitorTips PoiVisitorTip[]
+  visitInfo   PoiVisitInfo?
+  nearby      PoiNearby[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PoiMedia {
+  id        String   @id @default(cuid())
+  poiId     String
+  poi       Poi      @relation(fields: [poiId], references: [id], onDelete: Cascade)
+  type      String   @default("IMAGE") // IMAGE, VIDEO
+  url       String   @db.Text
+  isHero    Boolean  @default(false)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+model PoiVisitorTip {
+  id     String  @id @default(cuid())
+  poiId  String
+  poi    Poi     @relation(fields: [poiId], references: [id], onDelete: Cascade)
+  nameEL String  @db.VarChar(500)
+  nameEN String? @db.VarChar(500)
+  order  Int     @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PoiVisitInfo {
+  id           String  @id @default(cuid())
+  poiId        String  @unique
+  poi          Poi     @relation(fields: [poiId], references: [id], onDelete: Cascade)
+  distance     String? @db.VarChar(255)
+  duration     String? @db.VarChar(255)
+  price        String? @db.VarChar(255)
+  hours        String? @db.VarChar(255)
+  bestTime     String? @db.VarChar(255)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PoiNearby {
+  id       String  @id @default(cuid())
+  poiId    String
+  poi      Poi     @relation(fields: [poiId], references: [id], onDelete: Cascade)
+  name     String  @db.VarChar(255)
+  distance String? @db.VarChar(100)
+  order    Int     @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  name      String   @db.VarChar(255)
+  email     String?  @db.VarChar(255)
+  date      DateTime @default(now())
+  titleEL   String?  @db.VarChar(255)
+  titleEN   String?  @db.VarChar(255)
+  contentEL String   @db.Text
+  contentEN String?  @db.Text
+  avatar    String?  @db.Text
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ================================================================
+// PAGE META — per-page hero content + SEO metadata
+// ================================================================
+
+model PageMeta {
+  id          String   @id @default(cuid())
+  /// Unique identifier for the page, e.g. "home", "rooms", "athens", "gallery", "contact"
+  slug        String   @unique @db.VarChar(100)
+  /// On/off – allows hiding a page from the nav without deleting the data
+  published   Boolean  @default(true)
+
+  // Hero content (bilingual)
+  heroImage       String?  @db.Text
+  heroVideo       String?  @db.Text
+  titleEL         String   @db.VarChar(255)
+  titleEN         String?  @db.VarChar(255)
+  subtitleEL      String?  @db.VarChar(255)
+  subtitleEN      String?  @db.VarChar(255)
+  textEL          String?  @db.LongText
+  textEN          String?  @db.LongText
+
+  // SEO (English-first, Greek fallback optional)
+  metaTitleEL       String?  @db.VarChar(70)
+  metaTitleEN       String?  @db.VarChar(70)
+  metaDescriptionEL String?  @db.Text
+  metaDescriptionEN String?  @db.Text
+  keywords          String?  @db.Text   // comma-separated
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ── Home Page Sections ────────────────────────────────────────────────────────
+// One row per section. `key` is the unique identifier (e.g. "hero", "bar").
+// `extras` is a flexible JSON blob for section-specific structured data
+// (stat counters, opening hours, feature cards, amenity list, etc.)
+
+model HomeSection {
+  id        String  @id @default(cuid())
+  key       String  @unique           // e.g. "hero", "stayAndDrink", "bar"
+  order     Int     @default(0)
+  published Boolean @default(true)
+
+  // Background / hero image
+  image     String? @db.Text
+
+  // Bilingual micro-label (e.g. "EST. 2018" / "EST. 2018")
+  labelEL   String? @db.VarChar(120)
+  labelEN   String? @db.VarChar(120)
+
+  // Bilingual title (headline)
+  titleEL   String? @db.Text
+  titleEN   String? @db.Text
+
+  // Bilingual subtitle / pull-quote
+  subtitleEL String? @db.Text
+  subtitleEN String? @db.Text
+
+  // Bilingual body paragraph
+  bodyEL    String? @db.Text
+  bodyEN    String? @db.Text
+
+  // CTA button text + URL (primary)
+  ctaLabelEL  String? @db.VarChar(120)
+  ctaLabelEN  String? @db.VarChar(120)
+  ctaUrl      String? @db.VarChar(500)
+
+  // CTA button text + URL (secondary)
+  cta2LabelEL String? @db.VarChar(120)
+  cta2LabelEN String? @db.VarChar(120)
+  cta2Url     String? @db.VarChar(500)
+
+  // Flexible JSON for section-specific data
+  // Hero     → { stats: [{value,label}] }
+  // Bar      → { breakfastFeatures:[{title,desc}], cocktailTags:[str], hours:[{label,time,desc}], galleryImages:[url] }
+  // Amenities→ { items:[{icon,label,desc}] }
+  // Contact  → { email, phone, whatsapp }
+  extras    Json?   @default("{}")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
