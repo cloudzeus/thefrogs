@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Coffee, Wine, Clock, Utensils, Sun, Moon } from 'lucide-react';
+import Image from 'next/image';
 import type { HomeSectionRow } from '@/types/home-section';
 import { useLanguage } from '@/context/LanguageContext';
 
@@ -118,7 +119,14 @@ export default function Bar({ data }: Props) {
       {/* Hero */}
       <div ref={heroRef} className="relative h-[70vh] lg:h-[80vh] overflow-hidden">
         <div className="hero-image absolute inset-0">
-          <img src={image} alt={t("The Frogs Bar", "Το Bar του The Frogs")} className="w-full h-full object-cover" />
+          <Image
+            src={image}
+            alt={t("The Frogs Bar", "Το Bar του The Frogs")}
+            fill
+            sizes="100vw"
+            className="object-cover"
+            loading="eager"
+          />
           <div className="absolute inset-0 bg-gradient-to-t from-frogs-dark via-frogs-dark/50 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-r from-frogs-dark/70 to-transparent" />
         </div>
@@ -150,7 +158,14 @@ export default function Bar({ data }: Props) {
               </p>
             </div>
             <div className="relative h-[400px] lg:h-[500px] rounded-2xl overflow-hidden">
-              <img src={ex.breakfastImage} alt={t("Breakfast at The Frogs", "Πρωινό στο The Frogs")} className="w-full h-full object-cover" />
+              <Image
+                src={ex.breakfastImage}
+                alt={t("Breakfast at The Frogs", "Πρωινό στο The Frogs")}
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover"
+                loading="lazy"
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-frogs-dark/40 to-transparent" />
             </div>
           </div>
@@ -199,7 +214,14 @@ export default function Bar({ data }: Props) {
               </div>
             </div>
             <div className="cocktails-image order-1 lg:order-2 relative h-[400px] lg:h-[500px] rounded-2xl overflow-hidden">
-              <img src={ex.cocktailsImage} alt={t("Cocktails at The Frogs", "Κοκτέιλ στο The Frogs")} className="w-full h-full object-cover" />
+              <Image
+                src={ex.cocktailsImage}
+                alt={t("Cocktails at The Frogs", "Κοκτέιλ στο The Frogs")}
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="object-cover"
+                loading="lazy"
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-frogs-dark/40 to-transparent" />
             </div>
           </div>
@@ -258,8 +280,15 @@ export default function Bar({ data }: Props) {
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               {ex.galleryImages.map((img, i) => (
                 <div key={i} className={`gallery-item relative overflow-hidden rounded-xl group ${i === 0 ? 'col-span-2 row-span-2' : ''}`}>
-                  <div className={i === 0 ? 'aspect-square' : 'aspect-[4/3]'}>
-                    <img src={img} alt={t(`Bar interior ${i + 1}`, `Εσωτερικό του bar ${i + 1}`)} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                  <div className={`relative ${i === 0 ? 'aspect-square' : 'aspect-[4/3]'}`}>
+                    <Image
+                      src={img}
+                      alt={t(`Bar interior ${i + 1}`, `Εσωτερικό του bar ${i + 1}`)}
+                      fill
+                      sizes="(max-width: 768px) 50vw, 25vw"
+                      className="object-cover transition-transform duration-700 group-hover:scale-110"
+                      loading="lazy"
+                    />
                   </div>
                   <div className="absolute inset-0 bg-frogs-dark/30 opacity-100 group-hover:opacity-0 transition-opacity duration-500" />
                 </div>

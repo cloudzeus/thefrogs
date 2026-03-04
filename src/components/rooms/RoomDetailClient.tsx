@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
     ChevronLeft, ChevronRight, Users, Maximize, Check,
     ArrowLeft, Bed, Bath, Wifi, Wind, Coffee, Sparkles, X, ArrowRight,
@@ -120,7 +121,15 @@ export default function RoomDetailClient({
                             className={`absolute inset-0 transition-all duration-1000 ${index === currentImage ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
                                 }`}
                         >
-                            <img src={img} alt={t(`${room.nameEN || room.name} - View ${index + 1}`, `${room.nameEL || room.name} - Άποψη ${index + 1}`)} className="w-full h-full object-cover" />
+                            <Image
+                                src={img}
+                                alt={t(`${room.nameEN || room.name} - View ${index + 1}`, `${room.nameEL || room.name} - Άποψη ${index + 1}`)}
+                                fill
+                                sizes="100vw"
+                                className="object-cover"
+                                loading={index === 0 ? 'eager' : 'lazy'}
+                                priority={index === 0}
+                            />
                         </div>
                     ))}
                     <div className="absolute inset-0 bg-gradient-to-t from-[#2A2D25] via-[#2A2D25]/30 to-transparent" />
@@ -327,8 +336,15 @@ export default function RoomDetailClient({
                                     onClick={() => { setLightboxIndex(index); setLightboxOpen(true); }}
                                     className={`relative overflow-hidden rounded-xl group ${index === 0 ? 'col-span-2 row-span-2' : ''}`}
                                 >
-                                    <div className={index === 0 ? 'aspect-square' : 'aspect-[4/3]'}>
-                                        <img src={img} alt={t(`${room.nameEN || room.name} view ${index + 1}`, `${room.nameEL || room.name} άποψη ${index + 1}`)} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                                    <div className={`relative ${index === 0 ? 'aspect-square' : 'aspect-[4/3]'}`}>
+                                        <Image
+                                            src={img}
+                                            alt={t(`${room.nameEN || room.name} view ${index + 1}`, `${room.nameEL || room.name} άποψη ${index + 1}`)}
+                                            fill
+                                            sizes="(max-width: 768px) 50vw, 25vw"
+                                            className="object-cover transition-transform duration-700 group-hover:scale-110"
+                                            loading="lazy"
+                                        />
                                     </div>
                                     <div className="absolute inset-0 bg-[#2A2D25]/40 opacity-100 group-hover:opacity-0 transition-opacity duration-500" />
                                     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
@@ -354,11 +370,14 @@ export default function RoomDetailClient({
                         <div className="grid md:grid-cols-3 gap-6">
                             {relatedRooms.map((r) => (
                                 <Link key={r.slug} href={`/rooms/${r.slug}`} className="related-card group relative overflow-hidden rounded-xl">
-                                    <div className="aspect-[4/3]">
-                                        <img
+                                    <div className="relative aspect-[4/3]">
+                                        <Image
                                             src={r.featuredImage || '/images/guesthouse-room.jpg'}
                                             alt={t(r.nameEN || r.name, r.nameEL || r.name)}
-                                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                            fill
+                                            sizes="(max-width: 768px) 100vw, 33vw"
+                                            className="object-cover transition-transform duration-700 group-hover:scale-110"
+                                            loading="lazy"
                                         />
                                     </div>
                                     <div className="absolute inset-0 bg-gradient-to-t from-[#2A2D25] via-[#2A2D25]/20 to-transparent" />
@@ -392,7 +411,16 @@ export default function RoomDetailClient({
                     >
                         <ChevronLeft className="w-6 h-6" />
                     </button>
-                    <img src={allImages[lightboxIndex]} alt={t(`${room.nameEN || room.name} full view`, `${room.nameEL || room.name} πλήρης άποψη`)} className="max-w-full max-h-[85vh] object-contain rounded-lg" />
+                    <div className="relative max-w-[90vw] max-h-[85vh] w-full h-[85vh]" onClick={(e) => e.stopPropagation()}>
+                        <Image
+                            src={allImages[lightboxIndex]}
+                            alt={t(`${room.nameEN || room.name} full view`, `${room.nameEL || room.name} πλήρης άποψη`)}
+                            fill
+                            sizes="90vw"
+                            className="object-contain rounded-lg"
+                            priority
+                        />
+                    </div>
                     <button
                         onClick={() => setLightboxIndex((p) => (p + 1) % allImages.length)}
                         className="absolute right-6 w-12 h-12 rounded-full bg-[#2A2D25]/50 border border-[#D9D3C6]/30 flex items-center justify-center text-[#F9F6EF] hover:bg-[#C9A84C] hover:text-[#2A2D25] transition-all"

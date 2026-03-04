@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Link from 'next/link';
+import Image from 'next/image';
 import type { HomeSectionRow } from '@/types/home-section';
 import { useLanguage } from '@/context/LanguageContext';
 
@@ -163,10 +164,13 @@ export default function RoomsShowcase({ data, dbRooms }: Props) {
               zIndex: 0,
             }}
           >
-            <img
+            <Image
               src={room.featuredImage || room.images?.[0]?.url || ''}
               alt={t(room.nameEN, room.nameEL) || room.name || ''}
-              className="w-full h-full object-cover"
+              fill
+              sizes="500px"
+              className="object-cover"
+              loading="lazy"
             />
             {/* Subtle gold overlay */}
             <div

@@ -1,11 +1,25 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { LanguageProvider } from "@/context/LanguageContext";
-import { Inter } from "next/font/google";
+import { Inter, Roboto, Roboto_Condensed } from "next/font/google";
 
 const inter = Inter({
   subsets: ["latin", "greek"],
   variable: "--ff-all",
+  display: "swap",
+});
+
+const roboto = Roboto({
+  subsets: ["latin", "greek"],
+  weight: ["300", "400", "500", "700", "900"],
+  variable: "--ff-heading",
+  display: "swap",
+});
+
+const robotoCondensed = Roboto_Condensed({
+  subsets: ["latin", "greek"],
+  weight: ["700"],
+  variable: "--ff-display",
   display: "swap",
 });
 
@@ -24,7 +38,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${inter.variable}`}
+      className={`${inter.variable} ${roboto.variable} ${robotoCondensed.variable}`}
     >
       <body className="antialiased">
         <LanguageProvider>{children}</LanguageProvider>

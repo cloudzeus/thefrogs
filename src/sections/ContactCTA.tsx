@@ -4,6 +4,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Mail, Phone } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import type { HomeSectionRow } from '@/types/home-section';
 import { useLanguage } from '@/context/LanguageContext';
 
@@ -64,7 +65,7 @@ export default function ContactCTA({ data }: Props) {
           <Link href={ctaUrl} className="btn-secondary self-start fade-in">{ctaLabel}</Link>
         </div>
         <div ref={mediaRef} className="hidden lg:block w-1/2 h-full relative overflow-hidden" style={{ willChange: 'transform, opacity' }}>
-          <img src={image} alt="Contact" className="w-full h-full object-cover" style={{ willChange: 'transform' }} />
+          <Image src={image} alt="Contact" fill sizes="50vw" className="object-cover" loading="lazy" style={{ willChange: 'transform' }} />
           <div className="absolute inset-0 bg-gradient-to-l from-transparent to-frogs-dark/30" />
         </div>
       </div>

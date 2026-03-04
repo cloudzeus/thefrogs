@@ -3,10 +3,12 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Link from 'next/link';
+import Image from 'next/image';
 import type { HomeSectionRow } from '@/types/home-section';
 import { useLanguage } from '@/context/LanguageContext';
 
 gsap.registerPlugin(ScrollTrigger);
+
 
 type Props = { data?: HomeSectionRow | null };
 
@@ -70,10 +72,18 @@ export default function Hero({ data }: Props) {
     <section ref={sectionRef} className="relative min-h-screen flex items-center overflow-hidden bg-frogs-dark">
       {/* Background */}
       <div ref={imageRef} className="absolute inset-0" style={{ willChange: 'transform, opacity' }}>
-        <img src={image} alt={`The Frogs Guesthouse - ${label}`} className="w-full h-full object-cover" />
+        <Image
+          src={image}
+          alt={`The Frogs Guesthouse - ${label}`}
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+        />
         <div className="absolute inset-0 bg-gradient-to-b from-frogs-dark/40 via-frogs-dark/50 to-frogs-dark/90" />
         <div className="absolute inset-0 bg-gradient-to-r from-frogs-dark/70 to-transparent" />
       </div>
+
 
       {/* Content */}
       <div ref={contentRef} className="relative z-10 px-6 lg:px-16 max-w-7xl mx-auto w-full pt-24 pb-16">

@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
     ArrowLeft, MapPin, Clock, Euro, Sun, Camera, Info, ArrowRight, Tag,
     ChevronLeft, ChevronRight, X
@@ -130,7 +131,14 @@ export default function AthensDetailClient({ poi, relatedPois }: { poi: Poi; rel
             {/* Hero */}
             <div ref={heroRef} className="relative h-[70vh] lg:h-[80vh] overflow-hidden">
                 <div className="absolute inset-0">
-                    <img src={heroImage} alt={t(poi.titleEN, poi.titleEL)} className="w-full h-full object-cover" />
+                    <Image
+                        src={heroImage}
+                        alt={t(poi.titleEN, poi.titleEL)}
+                        fill
+                        sizes="100vw"
+                        className="object-cover"
+                        priority
+                    />
                     <div className="absolute inset-0 bg-[#2A2D25]/50" />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#2A2D25] via-[#2A2D25]/30 to-transparent" />
                 </div>
@@ -215,11 +223,14 @@ export default function AthensDetailClient({ poi, relatedPois }: { poi: Poi; rel
                                                 onClick={() => openLightbox(i)}
                                                 className={`gallery-item relative overflow-hidden rounded-xl group text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A84C] ${i === 0 ? 'col-span-2 row-span-2' : ''}`}
                                             >
-                                                <div className={i === 0 ? 'aspect-square' : 'aspect-[4/3]'}>
-                                                    <img
+                                                <div className={`relative ${i === 0 ? 'aspect-square' : 'aspect-[4/3]'}`}>
+                                                    <Image
                                                         src={img.url}
                                                         alt={`${t(poi.titleEN, poi.titleEL)} — ${t('view', 'άποψη')} ${i + 1}`}
-                                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                                        fill
+                                                        sizes="(max-width: 768px) 50vw, 33vw"
+                                                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                                                        loading="lazy"
                                                     />
                                                 </div>
                                                 {/* Hover overlay */}
@@ -368,11 +379,14 @@ export default function AthensDetailClient({ poi, relatedPois }: { poi: Poi; rel
                                         href={`/athens/${r.slug}`}
                                         className="related-card group relative overflow-hidden rounded-xl"
                                     >
-                                        <div className="aspect-[4/3]">
-                                            <img
+                                        <div className="relative aspect-[4/3]">
+                                            <Image
                                                 src={img}
                                                 alt={t(r.titleEN, r.titleEL)}
-                                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                                fill
+                                                sizes="(max-width: 768px) 100vw, 33vw"
+                                                className="object-cover transition-transform duration-700 group-hover:scale-110"
+                                                loading="lazy"
                                             />
                                         </div>
                                         <div className="absolute inset-0 bg-gradient-to-t from-[#2A2D25] via-[#2A2D25]/20 to-transparent" />
@@ -419,13 +433,17 @@ export default function AthensDetailClient({ poi, relatedPois }: { poi: Poi; rel
                     )}
 
                     {/* Image — stopPropagation so clicking the image itself doesn't close */}
-                    <img
-                        src={galleryUrls[lightboxIndex]}
-                        alt={t(poi.titleEN, poi.titleEL)}
-                        className="max-w-[90vw] max-h-[85vh] object-contain rounded-lg select-none shadow-2xl"
-                        onClick={e => e.stopPropagation()}
-                        draggable={false}
-                    />
+                    <div className="relative max-w-[90vw] max-h-[85vh] w-full h-[85vh]" onClick={e => e.stopPropagation()}>
+                        <Image
+                            src={galleryUrls[lightboxIndex]}
+                            alt={t(poi.titleEN, poi.titleEL)}
+                            fill
+                            sizes="90vw"
+                            className="object-contain rounded-lg select-none shadow-2xl"
+                            priority
+                            draggable={false}
+                        />
+                    </div>
 
                     {/* Next */}
                     {galleryUrls.length > 1 && (

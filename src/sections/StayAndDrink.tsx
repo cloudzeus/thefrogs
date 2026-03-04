@@ -2,6 +2,7 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Image from 'next/image';
 import type { HomeSectionRow } from '@/types/home-section';
 import { useLanguage } from '@/context/LanguageContext';
 
@@ -52,7 +53,7 @@ export default function StayAndDrink({ data }: Props) {
   return (
     <section ref={sectionRef} className="section-pinned bg-frogs-dark z-20">
       <div ref={imageRef} className="absolute inset-0 w-full h-full" style={{ willChange: 'transform, opacity' }}>
-        <img src={image} alt={t("Bar Interior", "Εσωτερικό του Bar")} className="w-full h-full object-cover" />
+        <Image src={image} alt={t("Bar Interior", "Εσωτερικό του Bar")} fill sizes="100vw" className="object-cover" loading="eager" />
         <div className="absolute inset-0 bg-frogs-dark/60" />
         <div className="absolute inset-0" style={{ background: 'linear-gradient(90deg, rgba(42,45,37,0.8) 0%, rgba(42,45,37,0.4) 50%, rgba(42,45,37,0.6) 100%)' }} />
       </div>

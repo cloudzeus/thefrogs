@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { X } from 'lucide-react';
+import Image from 'next/image';
 import type { HomeSectionRow } from '@/types/home-section';
 import { useLanguage } from '@/context/LanguageContext';
 
@@ -81,8 +82,15 @@ export default function Gallery({ data, dbImages }: Props) {
               tabIndex={0}
               onKeyDown={(e) => e.key === 'Enter' && setLightboxImage(image.src)}
             >
-              <div className="aspect-[4/3] lg:aspect-auto h-full min-h-[300px] lg:min-h-[400px]">
-                <img src={image.src} alt={image.alt} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+              <div className="relative aspect-[4/3] lg:aspect-auto h-full min-h-[300px] lg:min-h-[400px]">
+                <Image
+                  src={image.src}
+                  alt={image.alt}
+                  fill
+                  sizes="(max-width: 768px) 50vw, (max-width: 1024px) 50vw, 33vw"
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
+                />
               </div>
               <div className="absolute inset-0 bg-frogs-dark/40 opacity-100 group-hover:opacity-0 transition-opacity duration-300" />
             </div>
@@ -104,7 +112,16 @@ export default function Gallery({ data, dbImages }: Props) {
           >
             <X className="w-8 h-8" aria-hidden="true" />
           </button>
-          <img src={lightboxImage} alt="Gallery preview" className="max-w-full max-h-[90vh] object-contain rounded-lg" onClick={(e) => e.stopPropagation()} />
+          <div className="relative max-w-5xl max-h-[90vh] w-full h-full" onClick={(e) => e.stopPropagation()}>
+            <Image
+              src={lightboxImage}
+              alt="Gallery preview"
+              fill
+              sizes="90vw"
+              className="object-contain rounded-lg"
+              priority
+            />
+          </div>
         </div>
       )}
     </section>

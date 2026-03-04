@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Link from 'next/link';
+import Image from 'next/image';
 import type { HomeSectionRow } from '@/types/home-section';
 import { useLanguage } from '@/context/LanguageContext';
 
@@ -47,7 +48,7 @@ export default function Guesthouse({ data }: Props) {
     <section ref={sectionRef} className="section-pinned bg-frogs-dark z-30">
       <div className="h-full flex">
         <div ref={mediaRef} className="hidden lg:block w-1/2 h-full relative overflow-hidden" style={{ willChange: 'transform, opacity' }}>
-          <img src={image} alt="Guesthouse Room" className="w-full h-full object-cover" style={{ willChange: 'transform' }} />
+          <Image src={image} alt="Guesthouse Room" fill sizes="50vw" className="object-cover" loading="lazy" style={{ willChange: 'transform' }} />
           <div className="absolute inset-0 bg-gradient-to-r from-transparent to-frogs-dark/30" />
         </div>
         <div ref={textRef} className="w-full lg:w-1/2 h-full flex flex-col justify-center px-6 lg:px-16" style={{ willChange: 'transform, opacity' }}>

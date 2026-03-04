@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Menu, X, Phone, Globe } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useLanguage } from '@/context/LanguageContext';
 
@@ -53,10 +54,13 @@ export default function Navigation() {
           {/* Logo */}
           <Link href="/" className="flex items-center group" aria-label={t("The Frogs Guesthouse Home", "Αρχική Σελίδα The Frogs Guesthouse")}>
             <div className="h-10 relative flex items-center">
-              <img
+              <Image
                 src="/the-frogs.svg"
                 alt="The Frogs Guesthouse"
-                className="h-full w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                width={120}
+                height={40}
+                className="h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                priority
               />
             </div>
           </Link>
