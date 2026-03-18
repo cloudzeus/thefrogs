@@ -10,10 +10,12 @@ import { createMenuLink, updateMenuLink, deleteMenuLink, updateMenuLinkOrder } f
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 type MenuLinkRow = { id: string; labelEL: string; labelEN: string | null; href: string; order: number };
+export type AvailablePage = { type: "Standard" | "Custom"; labelEL: string; labelEN: string; href: string };
 
-export function DataTableMenu({ initialData }: { initialData: MenuLinkRow[] }) {
+export function DataTableMenu({ initialData, availablePages = [] }: { initialData: MenuLinkRow[], availablePages?: AvailablePage[] }) {
     const [data, setData] = React.useState(initialData);
     const [open, setOpen] = React.useState(false);
     const [editId, setEditId] = React.useState<string | null>(null);
@@ -146,6 +148,46 @@ export function DataTableMenu({ initialData }: { initialData: MenuLinkRow[] }) {
                         <DialogTitle className="font-black">{editId ? "Edit" : "New"} Menu Item</DialogTitle>
                     </DialogHeader>
                     <div className="space-y-4 pt-2">
+                        {availablePages.length > 0 && (
+                            <div className="space-y-1.5 mb-4">
+                                <Label className="text-[11px] font-black uppercase tracking-widest text-muted-foreground">Select an Existing Page</Label>
+                                <Select
+                                    onValueChange={(val) => {
+                                        if (!val) return;
+                                        const page = availablePages.find(p => p.href === val);
+                                        if (page) {
+                                            setLabelEL(page.labelEL);
+                                            setLabelEN(page.labelEN || "");
+                                            setHref(page.href);
+                                        }
+                                    }}
+                                >
+                                    <SelectTrigger className="w-full rounded-xl">
+                                        <SelectValue placeholder="Choose a page to auto-fill..." />
+                                    </SelectTrigger>
+                                    <SelectContent className="rounded-xl">
+                                        <SelectGroup>
+                                            <SelectLabel>Standard Pages</SelectLabel>
+                                            {availablePages.filter(p => p.type === 'Standard').map(p => (
+                                                <SelectItem key={p.href} value={p.href}>
+                                                    {p.labelEL} ({p.labelEN}) - <span className="text-muted-foreground text-xs">{p.href}</span>
+                                                </SelectItem>
+                                            ))}
+                                        </SelectGroup>
+                                        {availablePages.some(p => p.type === 'Custom') && (
+                                            <SelectGroup>
+                                                <SelectLabel>Custom Pages</SelectLabel>
+                                                {availablePages.filter(p => p.type === 'Custom').map(p => (
+                                                    <SelectItem key={p.href} value={p.href}>
+                                                        {p.labelEL} ({p.labelEN}) - <span className="text-muted-foreground text-xs">{p.href}</span>
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectGroup>
+                                        )}
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                        )}
                         <div className="space-y-1.5">
                             <Label className="text-[11px] font-black uppercase tracking-widest text-muted-foreground">🇬🇷 Greek Label</Label>
                             <Input value={labelEL} onChange={e => setLabelEL(e.target.value)} placeholder="e.g. Αρχική" className="rounded-xl" />

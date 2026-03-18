@@ -22,7 +22,7 @@ export default async function ContactPage() {
         <>
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(lodgingBusinessSchema) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
-            <Contact />
+            <Contact pageMeta={pageMeta} />
         </>
     );
 }

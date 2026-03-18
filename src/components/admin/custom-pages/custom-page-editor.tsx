@@ -201,6 +201,7 @@ export function CustomPageEditor({ initialPage }: { initialPage: any }) {
     const [page, setPage] = React.useState(initialPage);
     const [blocks, setBlocks] = React.useState<CustomPageBlock[]>(initialPage.blocks || []);
     const [saving, setSaving] = React.useState(false);
+    const [mediaOpen, setMediaOpen] = React.useState(false);
     
     const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
     const dndId = React.useId();
@@ -240,6 +241,7 @@ export function CustomPageEditor({ initialPage }: { initialPage: any }) {
                 slug: page.slug,
                 titleEL: page.titleEL,
                 titleEN: page.titleEN,
+                heroImage: page.heroImage,
                 blocks
             });
             toast.success("Page updated!");
@@ -307,6 +309,35 @@ export function CustomPageEditor({ initialPage }: { initialPage: any }) {
                         <div className="space-y-2">
                             <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">URL Slug</Label>
                             <Input value={page.slug} onChange={e => setPage({...page, slug: e.target.value})} className="rounded-xl font-mono text-sm" />
+                        </div>
+                        <div className="space-y-2 pt-2 border-t border-border">
+                            <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Hero Image</Label>
+                            {page.heroImage ? (
+                                <div className="space-y-2">
+                                    <div className="relative aspect-video rounded-xl overflow-hidden bg-muted">
+                                        <img src={page.heroImage} alt="Hero" className="w-full h-full object-cover" />
+                                    </div>
+                                    <Button size="sm" variant="outline" className="w-full text-xs rounded-xl text-red-500 hover:bg-red-50 hover:text-red-600" onClick={() => setPage({...page, heroImage: null})}>Remove Image</Button>
+                                </div>
+                            ) : (
+                                <div>
+                                    <Button variant="outline" size="sm" className="w-full gap-2 rounded-xl text-xs" onClick={() => setMediaOpen(true)}>
+                                        <Plus className="w-3 h-3"/> Select Hero Image
+                                    </Button>
+                                    <MediaPickerDialog
+                                        open={mediaOpen}
+                                        onOpenChange={setMediaOpen}
+                                        multiple={false}
+                                        filter="IMAGE"
+                                        title="Select Hero Image"
+                                        onSelect={(files: any) => {
+                                            if (files && files[0]) {
+                                                setPage({...page, heroImage: files[0].url});
+                                            }
+                                        }}
+                                    />
+                                </div>
+                            )}
                         </div>
                     </div>
 

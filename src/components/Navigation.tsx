@@ -69,16 +69,12 @@ export default function Navigation({ navLinks = [
               <Link key={link.href}
                 href={link.href}
                 aria-current={isActive(link.href) ? 'page' : undefined}
-                className={`relative font-body text-sm tracking-wide transition-colors duration-300 ${isActive(link.href)
+                className={`relative font-display font-bold uppercase tracking-tight text-[13px] transition-colors duration-300 ${isActive(link.href)
                   ? 'text-frogs-gold'
-                  : 'text-frogs-text-light/80 hover:text-frogs-text-light'
+                  : 'text-frogs-text-light/80 hover:text-frogs-text-light hover:text-frogs-gold'
                   }`}
               >
                 {t(link.labelEN || link.labelEL, link.labelEL)}
-                <span
-                  className={`absolute -bottom-1 left-0 h-px bg-frogs-gold transition-all duration-300 ${isActive(link.href) ? 'w-full' : 'w-0 hover:w-full'
-                    }`}
-                />
               </Link>
             ))}
           </div>
@@ -143,11 +139,14 @@ export default function Navigation({ navLinks = [
               <span className="text-sm">+30 697 690 8878</span>
             </a>
 
-            <Link href="/contact"
+            <a 
+              href="https://thefrogsguesthouse.reserve-online.net/" 
+              target="_blank"
+              rel="noopener noreferrer"
               className="btn-primary hidden sm:inline-flex"
             >
               {t("Book Now", "Κράτηση")}
-            </Link>
+            </a>
 
             {/* Mobile Menu Button */}
             <button
@@ -221,7 +220,10 @@ export default function Navigation({ navLinks = [
             </button>
           </div>
 
-          <Link href="/contact"
+          <a 
+            href="https://thefrogsguesthouse.reserve-online.net/"
+            target="_blank"
+            rel="noopener noreferrer"
             className="btn-primary mt-8"
             style={{
               transitionDelay: isMobileMenuOpen ? '350ms' : '0ms',
@@ -230,7 +232,7 @@ export default function Navigation({ navLinks = [
             }}
           >
             {t("Book Now", "Κράτηση")}
-          </Link>
+          </a>
 
           <div
             className="flex items-center gap-2 text-frogs-text-light/60 mt-8"

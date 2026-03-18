@@ -12,6 +12,7 @@ export type CustomPageData = {
     slug: string;
     titleEL: string;
     titleEN?: string;
+    heroImage?: string;
     blocks?: CustomPageBlock[];
 };
 
@@ -36,6 +37,7 @@ export async function createCustomPage(data: CustomPageData) {
             slug: data.slug,
             titleEL: data.titleEL,
             titleEN: data.titleEN,
+            heroImage: data.heroImage,
             blocks: data.blocks ?? [],
         }
     });
@@ -51,6 +53,7 @@ export async function updateCustomPage(id: string, data: Partial<CustomPageData>
             slug: data.slug,
             titleEL: data.titleEL,
             titleEN: data.titleEN,
+            heroImage: data.heroImage,
             blocks: data.blocks ?? undefined,
         }
     });

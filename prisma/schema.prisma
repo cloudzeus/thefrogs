@@ -385,6 +385,7 @@ model Page {
   slug      String   @unique @db.VarChar(100)
   titleEL   String   @db.VarChar(255)
   titleEN   String?  @db.VarChar(255)
+  heroImage String?  @db.Text
   blocks    Json     @default("[]") // Store dragged blocks (heading, richtext, gallery)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

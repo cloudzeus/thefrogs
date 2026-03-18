@@ -3,10 +3,12 @@ import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function Contact() {
+export default function Contact({ pageMeta }: { pageMeta?: any }) {
+  const { language } = useLanguage();
   const heroRef = useRef<HTMLElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const infoRef = useRef<HTMLDivElement>(null);
@@ -101,13 +103,12 @@ export default function Contact() {
           />
           <div className="absolute inset-0 bg-frogs-dark/60" />
         </div>
-        <div className="relative z-10 text-center px-6">
-          <h1 className="hero-title font-display text-giant text-frogs-text-light mb-4">
-            CONTACT US
+        <div className="relative z-10 text-center px-6 mt-16">
+          <h1 className="hero-title font-display text-5xl md:text-6xl lg:text-7xl text-frogs-text-light mb-4 uppercase tracking-wider">
+            {pageMeta ? (language === 'EN' && pageMeta.titleEN ? pageMeta.titleEN : pageMeta.titleEL) : 'CONTACT US'}
           </h1>
           <p className="font-body text-lg text-frogs-text-light/80 max-w-xl mx-auto">
-            Always a pleasure to hear from you. For any special requests or other
-            enquiries do not hesitate to drop us a line.
+            {pageMeta ? (language === 'EN' && pageMeta.textEN ? pageMeta.textEN : pageMeta.textEL) : 'Always a pleasure to hear from you. For any special requests or other enquiries do not hesitate to drop us a line.'}
           </p>
         </div>
       </section>

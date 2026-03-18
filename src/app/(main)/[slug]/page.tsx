@@ -23,9 +23,14 @@ export default async function CustomDynamicPage({ params }: { params: Promise<{ 
     
     if (customPage) {
         return (
-            <main className="min-h-screen pt-40 pb-32 max-w-4xl mx-auto px-6 md:px-12 relative z-20 bg-frogs-dark text-frogs-text-light">
-                <AnimatedCustomPage blocks={customPage.blocks} title={customPage.titleEN || customPage.titleEL} />
-            </main>
+            <div className="min-h-screen bg-frogs-dark">
+                <AnimatedCustomPage 
+                    blocks={customPage.blocks} 
+                    titleEL={customPage.titleEL} 
+                    titleEN={customPage.titleEN} 
+                    heroImage={customPage.heroImage} 
+                />
+            </div>
         );
     }
 
