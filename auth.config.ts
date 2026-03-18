@@ -41,7 +41,7 @@ export const authConfig = {
                 return false; // Redirects to signIn page automatically
             }
             if (isLoginPage && isLoggedIn) {
-                return Response.redirect(new URL('/admin/dashboard', nextUrl));
+                return Response.redirect(new URL('/admin/rooms', nextUrl));
             }
             return true;
         },

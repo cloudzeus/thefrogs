@@ -21,29 +21,46 @@ export async function upsertPageMeta(data: {
     subtitleEN?: string;
     textEL?: string;
     textEN?: string;
+    // Core SEO
     metaTitleEL?: string;
     metaTitleEN?: string;
     metaDescriptionEL?: string;
     metaDescriptionEN?: string;
     keywords?: string;
+    // Open Graph
+    ogTitle?: string;
+    ogDescription?: string;
+    // Twitter
+    twitterTitle?: string;
+    twitterDescription?: string;
+    // Technical SEO
+    robotsDirective?: string;
+    canonicalHint?: string;
+    schemaType?: string;
+    // AI discoverability
+    aiSummary?: string;
+    faqSuggestions?: string[];
 }) {
-    const { slug, ...rest } = data;
+    const { slug, faqSuggestions, ...rest } = data;
+
+    const payload = {
+        ...rest,
+        metaTitleEL: rest.metaTitleEL?.slice(0, 70),
+        metaTitleEN: rest.metaTitleEN?.slice(0, 70),
+        ogTitle: rest.ogTitle?.slice(0, 100),
+        twitterTitle: rest.twitterTitle?.slice(0, 100),
+        faqSuggestions: faqSuggestions ? JSON.stringify(faqSuggestions) : undefined,
+    };
+
     const result = await prisma.pageMeta.upsert({
         where: { slug },
-        update: {
-            ...rest,
-            metaTitleEL: rest.metaTitleEL?.slice(0, 70),
-            metaTitleEN: rest.metaTitleEN?.slice(0, 70),
-        },
-        create: {
-            slug,
-            ...rest,
-            metaTitleEL: rest.metaTitleEL?.slice(0, 70),
-            metaTitleEN: rest.metaTitleEN?.slice(0, 70),
-        },
+        update: payload,
+        create: { slug, ...payload },
     });
+
     revalidatePath("/");
-    revalidatePath(`/${slug}`);
+    revalidatePath(`/${slug === "home" ? "" : slug}`);
+    revalidatePath("/admin/pages");
     return result;
 }
 

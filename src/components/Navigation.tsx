@@ -6,7 +6,14 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useLanguage } from '@/context/LanguageContext';
 
-export default function Navigation() {
+export default function Navigation({ navLinks = [
+    { labelEN: 'Home', labelEL: 'Αρχική', href: '/' },
+    { labelEN: 'Rooms', labelEL: 'Δωμάτια', href: '/rooms' },
+    { labelEN: 'Gallery', labelEL: 'Γκαλερί', href: '/gallery' },
+    { labelEN: 'Athens', labelEL: 'Αθήνα', href: '/athens' },
+    { labelEN: 'Directory', labelEL: 'Οδηγός', href: '/directory' },
+    { labelEN: 'Contact', labelEL: 'Επικοινωνία', href: '/contact' },
+] }: { navLinks?: { labelEN: string | null; labelEL: string; href: string }[] }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showLangDropdown, setShowLangDropdown] = useState(false);
@@ -21,15 +28,6 @@ export default function Navigation() {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  const navLinks = [
-    { labelEN: 'Home', labelEL: 'Αρχική', href: '/' },
-    { labelEN: 'Rooms', labelEL: 'Δωμάτια', href: '/rooms' },
-    { labelEN: 'Gallery', labelEL: 'Γκαλερί', href: '/gallery' },
-    { labelEN: 'Athens', labelEL: 'Αθήνα', href: '/athens' },
-    { labelEN: 'Directory', labelEL: 'Οδηγός', href: '/directory' },
-    { labelEN: 'Contact', labelEL: 'Επικοινωνία', href: '/contact' },
-  ];
 
   const isActive = (href: string) => {
     if (!pathname) return false;
@@ -76,7 +74,7 @@ export default function Navigation() {
                   : 'text-frogs-text-light/80 hover:text-frogs-text-light'
                   }`}
               >
-                {t(link.labelEN, link.labelEL)}
+                {t(link.labelEN || link.labelEL, link.labelEL)}
                 <span
                   className={`absolute -bottom-1 left-0 h-px bg-frogs-gold transition-all duration-300 ${isActive(link.href) ? 'w-full' : 'w-0 hover:w-full'
                     }`}
@@ -190,7 +188,7 @@ export default function Navigation() {
                 opacity: isMobileMenuOpen ? 1 : 0,
               }}
             >
-              {t(link.labelEN, link.labelEL)}
+              {t(link.labelEN || link.labelEL, link.labelEL)}
             </Link>
           ))}
 

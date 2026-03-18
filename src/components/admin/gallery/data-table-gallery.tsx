@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { createGalleryImage, deleteGalleryImage, reorderGalleryImages, updateGalleryImage } from "@/app/lib/actions/gallery";
 import { MediaPickerDialog } from "@/components/admin/shared/media-picker-dialog";
 
@@ -113,7 +114,16 @@ export function DataTableGallery({ initialImages }: { initialImages: GalleryRow[
             header: "Image Preview",
             cell: ({ row }) => (
                 <div className="flex items-center gap-4">
-                    <img src={row.original.url} alt="" className="w-16 h-16 rounded-lg object-cover border border-border" />
+                    <TooltipProvider>
+                        <Tooltip delayDuration={300}>
+                            <TooltipTrigger asChild>
+                                <img src={row.original.url} alt="" className="w-16 h-16 rounded-lg object-cover border border-border cursor-pointer transition-opacity hover:opacity-80" />
+                            </TooltipTrigger>
+                            <TooltipContent side="right" sideOffset={16} className="p-0 border-none bg-transparent overflow-hidden rounded-xl shadow-2xl">
+                                <img src={row.original.url} alt="Large preview" className="w-[600px] h-[600px] object-cover" />
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
                     <div className="flex flex-col gap-1">
                         <span className="font-semibold text-sm">{row.original.title || "Untitled"}</span>
                         {row.original.category ? (

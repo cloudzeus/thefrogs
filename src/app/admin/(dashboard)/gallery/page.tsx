@@ -6,10 +6,10 @@ export const dynamic = "force-dynamic";
 export default async function GalleryAdminPage() {
     const images = await getGalleryImages();
     return (
-        <div className="flex flex-col gap-6 w-full max-w-5xl mx-auto pb-20">
+        <div className="space-y-6">
             <div>
-                <h1 className="text-3xl font-bold tracking-tight">Image Gallery</h1>
-                <p className="text-muted-foreground mt-2">
+                <h1 className="text-3xl font-black tracking-tighter text-zinc-800 dark:text-zinc-100">Image Gallery</h1>
+                <p className="text-sm text-zinc-500 mt-1">
                     Manage the hero gallery images, titles, and categories for the frontend site.
                 </p>
             </div>

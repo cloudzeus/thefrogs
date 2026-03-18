@@ -155,16 +155,34 @@ model Media {
   updatedAt DateTime @updatedAt
 }
 
-model GuestDirectory {
+model Directory {
   id            String   @id @default(cuid())
   titleEL       String   @db.VarChar(255)
   titleEN       String?  @db.VarChar(255)
   descriptionEL String?  @db.LongText
   descriptionEN String?  @db.LongText
+  icon          String?  @db.VarChar(100)   // lucide icon name e.g. "Clock", "Wifi"
   order         Int      @default(0)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+
+  @@map("directory")
 }
+
+model LegalPage {
+  id          String   @id @default(cuid())
+  slug        String   @unique @db.VarChar(100)  // e.g. "privacy-policy", "terms", "cookies"
+  titleEL     String   @db.VarChar(255)
+  titleEN     String?  @db.VarChar(255)
+  contentEL   String?  @db.LongText              // HTML rich text (Greek)
+  contentEN   String?  @db.LongText              // HTML rich text (English)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("legal_pages")
+}
+
 
 model Poi {
   id                 String   @id @default(cuid())
@@ -287,6 +305,23 @@ model PageMeta {
   metaDescriptionEN String?  @db.Text
   keywords          String?  @db.Text   // comma-separated
 
+  // Open Graph (social sharing)
+  ogTitle           String?  @db.VarChar(100)
+  ogDescription     String?  @db.Text
+
+  // Twitter / X Card
+  twitterTitle       String?  @db.VarChar(100)
+  twitterDescription String?  @db.Text
+
+  // Technical SEO
+  robotsDirective   String?  @db.VarChar(100) // e.g. "index, follow"
+  canonicalHint     String?  @db.VarChar(255) // e.g. "/rooms"
+  schemaType        String?  @db.VarChar(100) // e.g. "LodgingBusiness"
+
+  // AI-search discoverability
+  aiSummary         String?  @db.Text   // Entity-rich paragraph for AI crawlers
+  faqSuggestions    Json?    @default("[]") // string[] — questions for FAQPage schema
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -340,5 +375,35 @@ model HomeSection {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+// ================================================================
+// DYNAMIC PAGES (e.g. About Us)
+// ================================================================
+model Page {
+  id        String   @id @default(cuid())
+  slug      String   @unique @db.VarChar(100)
+  titleEL   String   @db.VarChar(255)
+  titleEN   String?  @db.VarChar(255)
+  blocks    Json     @default("[]") // Store dragged blocks (heading, richtext, gallery)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("pages")
+}
+
+// ================================================================
+// MENU BUILDER
+// ================================================================
+model MenuLink {
+  id        String   @id @default(cuid())
+  labelEL   String   @db.VarChar(100)
+  labelEN   String?  @db.VarChar(100)
+  href      String   @db.VarChar(500)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("menu_links")
 }
 

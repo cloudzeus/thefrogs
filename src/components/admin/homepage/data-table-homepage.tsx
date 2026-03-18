@@ -48,7 +48,8 @@ type SectionRow = {
 const SECTION_LABELS: Record<string, string> = {
     hero: "🏠 Hero Banner",
     stayAndDrink: "🍸 Stay & Drink",
-    guesthouse: "🛏 Guesthouse",
+    guesthouse: "🛏 Guesthouse (Main Building)",
+    secondBuilding: "🏢 Second Building",
     bar: "☕ Bar",
     rooms: "🚪 Rooms Showcase",
     amenities: "✨ Amenities",
@@ -590,7 +591,7 @@ export function DataTableHomeSections({ data: initialData }: { data: SectionRow[
     };
 
     return (
-        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+        <DndContext id="home-sections-dnd" sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
             <SortableContext items={data.map(s => s.id)} strategy={verticalListSortingStrategy}>
                 <div className="space-y-2">
                     {data.map(section => (

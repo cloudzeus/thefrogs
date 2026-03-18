@@ -5,7 +5,6 @@ import Link from "next/link"
 import {
   ArrowUpCircleIcon,
   HelpCircleIcon,
-  LayoutDashboardIcon,
   SettingsIcon,
   UsersIcon,
   MapPinIcon,
@@ -16,6 +15,7 @@ import {
   BedDoubleIcon,
   FileTextIcon,
   LayoutIcon,
+  ShieldIcon,
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -38,11 +38,6 @@ import {
 
 const navData = {
   navMain: [
-    {
-      title: "Dashboard",
-      url: "/admin/dashboard",
-      icon: LayoutDashboardIcon,
-    },
     {
       title: "Users",
       url: "/admin/users",
@@ -88,6 +83,21 @@ const navData = {
       url: "/admin/pages",
       icon: FileTextIcon,
     },
+    {
+      title: "Custom Pages",
+      url: "/admin/custom-pages",
+      icon: LayoutIcon,
+    },
+    {
+      title: "Menu Builder",
+      url: "/admin/menu",
+      icon: LayoutIcon,
+    },
+    {
+      title: "Legal Pages",
+      url: "/admin/legal",
+      icon: ShieldIcon,
+    },
   ],
   navSecondary: [
     {
@@ -125,7 +135,7 @@ export function AppSidebar({
               asChild
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
-              <Link href="/admin/dashboard">
+              <Link href="/admin/rooms">
                 <div className="flex items-center gap-2">
                   <div className="w-6 h-6 rounded-md bg-zinc-800 flex items-center justify-center">
                     <svg viewBox="0 0 100 100" className="w-4 h-4 text-white">

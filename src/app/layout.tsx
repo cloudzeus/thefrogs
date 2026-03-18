@@ -24,9 +24,41 @@ const robotoCondensed = Roboto_Condensed({
 });
 
 export const metadata: Metadata = {
-  title: "The Frogs Guesthouse — Athens Boutique Hotel",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://frogs.wwa.gr"),
+  title: {
+    default: "The Frogs Guesthouse — Boutique Hotel in Athens, Greece",
+    template: "%s — The Frogs Guesthouse",
+  },
   description:
-    "A boutique guesthouse in the heart of Athens with a bar downstairs and a rooftop made for golden hour. Est. 2018.",
+    "A boutique guesthouse in the heart of Athens — Plaka neighbourhood — with a cocktail bar downstairs and a rooftop made for golden hour. Est. 2018.",
+  keywords: "Athens boutique hotel, Plaka guesthouse, Athens accommodation, boutique hotel Greece, rooftop Athens",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    alternateLocale: "el_GR",
+    siteName: "The Frogs Guesthouse",
+    title: "The Frogs Guesthouse — Boutique Hotel in Athens",
+    description:
+      "Boutique guesthouse in Plaka, Athens. Rooftop terrace, cocktail bar, and warm hospitality. Book direct for the best rate.",
+    images: [{ url: "/og-default.jpg", width: 1200, height: 630, alt: "The Frogs Guesthouse Athens" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "The Frogs Guesthouse — Athens",
+    description: "Boutique guesthouse in Plaka, Athens. Rooftop terrace, cocktail bar, warm hospitality.",
+    images: ["/og-default.jpg"],
+  },
 };
 
 export default function RootLayout({
