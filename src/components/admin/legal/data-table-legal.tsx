@@ -24,12 +24,54 @@ const emptyForm = {
     contentEN: "",
 };
 
+async function translate(text: string, from: string, to: string) {
+    if (!text || !text.trim() || text === "<p></p>") return "";
+    try {
+        const res = await fetch("/api/admin/translate", {
+            method: "POST", headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ text, from, to }),
+        });
+        const data = await res.json();
+        return data.translation || "";
+    } catch (e) {
+        console.error("Translation error", e);
+        return "";
+    }
+}
+
 export function DataTableLegal({ data: initialData }: { data: LegalPageItem[] }) {
     const [data, setData] = React.useState(initialData);
     const [open, setOpen] = React.useState(false);
     const [editing, setEditing] = React.useState<LegalPageItem | null>(null);
     const [form, setForm] = React.useState(emptyForm);
     const [loading, setLoading] = React.useState(false);
+    const [translating, setTranslating] = React.useState(false);
+
+    const handleTranslate = async (dir: "toEL" | "toEN") => {
+        setTranslating(true);
+        const from = dir === "toEL" ? "EN" : "EL";
+        const to = dir === "toEL" ? "EL" : "EN";
+        
+        try {
+            const titleSrc = dir === "toEL" ? form.titleEN : form.titleEL;
+            const contentSrc = dir === "toEL" ? form.contentEN : form.contentEL;
+            
+            const [newTitle, newContent] = await Promise.all([
+                translate(titleSrc, from, to),
+                translate(contentSrc, from, to)
+            ]);
+            
+            if (dir === "toEL") {
+                setForm(f => ({ ...f, titleEL: newTitle || f.titleEL, contentEL: newContent || f.contentEL }));
+            } else {
+                setForm(f => ({ ...f, titleEN: newTitle || f.titleEN, contentEN: newContent || f.contentEN }));
+            }
+            toast.success("Translation complete");
+        } catch (e) {
+            toast.error("Translation failed");
+        }
+        setTranslating(false);
+    };
 
     React.useEffect(() => { setData(initialData); }, [initialData]);
 
@@ -181,10 +223,34 @@ export function DataTableLegal({ data: initialData }: { data: LegalPageItem[] })
 
                         {/* Rich text — bilingual tabs */}
                         <Tabs defaultValue="el">
-                            <TabsList className="rounded-xl mb-4">
-                                <TabsTrigger value="el" className="gap-1.5"><Globe className="w-3.5 h-3.5" />🇬🇷 Greek content</TabsTrigger>
-                                <TabsTrigger value="en" className="gap-1.5"><Globe className="w-3.5 h-3.5" />🇬🇧 English content</TabsTrigger>
-                            </TabsList>
+                            <div className="flex items-center justify-between gap-4 mb-4">
+                                <TabsList className="rounded-xl">
+                                    <TabsTrigger value="el" className="gap-1.5"><Globe className="w-3.5 h-3.5" />🇬🇷 Greek</TabsTrigger>
+                                    <TabsTrigger value="en" className="gap-1.5"><Globe className="w-3.5 h-3.5" />🇬🇧 English</TabsTrigger>
+                                </TabsList>
+                                <div className="flex items-center gap-2">
+                                    <Button 
+                                        variant="outline" 
+                                        size="sm" 
+                                        type="button"
+                                        className="h-8 text-[11px] font-bold uppercase tracking-wider rounded-xl border-frogs-gold/20 text-muted-foreground hover:text-frogs-gold hover:border-frogs-gold/50"
+                                        onClick={() => handleTranslate("toEL")}
+                                        disabled={translating}
+                                    >
+                                        {translating ? <Loader2 className="w-3 h-3 animate-spin mr-1.5" /> : "🇬🇧 → 🇬🇷 Translate to Greek"}
+                                    </Button>
+                                    <Button 
+                                        variant="outline" 
+                                        size="sm" 
+                                        type="button"
+                                        className="h-8 text-[11px] font-bold uppercase tracking-wider rounded-xl border-frogs-gold/20 text-muted-foreground hover:text-frogs-gold hover:border-frogs-gold/50"
+                                        onClick={() => handleTranslate("toEN")}
+                                        disabled={translating}
+                                    >
+                                        {translating ? <Loader2 className="w-3 h-3 animate-spin mr-1.5" /> : "🇬🇷 → 🇬🇧 Translate to English"}
+                                    </Button>
+                                </div>
+                            </div>
                             <TabsContent value="el">
                                 <RichEditor
                                     value={form.contentEL}

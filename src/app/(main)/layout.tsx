@@ -2,6 +2,7 @@ import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import FrogsBodyStyle from '@/components/FrogsBodyStyle';
 import { getMenuLinks } from '@/app/lib/actions/menu';
+import { getLegalPages, type LegalPageItem } from '@/app/lib/actions/legal';
 
 export default async function MainLayout({ children }: { children: React.ReactNode }) {
     let menuLinks = [];
@@ -18,7 +19,10 @@ export default async function MainLayout({ children }: { children: React.ReactNo
             { labelEN: 'Contact', labelEL: 'Επικοινωνία', href: '/contact' },
         ];
     }
-
+    let legalPages: LegalPageItem[] = [];
+    try {
+        legalPages = await getLegalPages();
+    } catch (e) {}
     return (
         <div className="relative bg-[#2A2D25] text-[#F9F6EF]">
             {/* Apply dark body colours client-side */}
@@ -36,7 +40,7 @@ export default async function MainLayout({ children }: { children: React.ReactNo
             </div>
 
             {/* Persistent Footer */}
-            <Footer />
+            <Footer legalPages={legalPages} />
         </div>
     );
 }

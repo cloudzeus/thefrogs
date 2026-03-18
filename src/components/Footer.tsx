@@ -6,13 +6,17 @@ import Link from 'next/link';
 import { Instagram, Facebook, MessageCircle, MapPin, Phone, Mail, ArrowUpRight } from 'lucide-react';
 
 import { useLanguage } from '@/context/LanguageContext';
+import { useState } from 'react';
+import { LegalDialog } from './LegalDialog';
+import { LegalPageItem } from '@/app/lib/actions/legal';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function Footer() {
+export default function Footer({ legalPages = [] }: { legalPages?: LegalPageItem[] }) {
   const footerRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const { t } = useLanguage();
+  const [legalSlug, setLegalSlug] = useState<string | null>(null);
 
   useEffect(() => {
     const footer = footerRef.current;
@@ -202,20 +206,49 @@ export default function Footer() {
                 © 2018–{new Date().getFullYear()} {t("The Frogs Guesthouse · Athens, Greece", "The Frogs Guesthouse · Αθήνα, Ελλάδα")}
               </p>
               <div className="flex items-center gap-6">
-                <Link href="#" className="font-body text-xs text-frogs-text-light/60 hover:text-frogs-gold transition-colors">
-                  {t("Privacy Policy", "Πολιτική Απορρήτου")}
-                </Link>
-                <Link href="#" className="font-body text-xs text-frogs-text-light/60 hover:text-frogs-gold transition-colors">
-                  {t("Terms & Conditions", "Όροι & Προϋποθέσεις")}
-                </Link>
-                <Link href="#" className="font-body text-xs text-frogs-text-light/60 hover:text-frogs-gold transition-colors">
-                  {t("Cookies", "Cookies")}
-                </Link>
+                {legalPages.length > 0 ? (
+                  legalPages.map((p) => (
+                    <button 
+                      key={p.slug}
+                      onClick={() => setLegalSlug(p.slug)} 
+                      className="font-body text-xs text-frogs-text-light/60 hover:text-frogs-gold transition-colors"
+                    >
+                      {t(p.titleEN || p.titleEL, p.titleEL)}
+                    </button>
+                  ))
+                ) : (
+                  <>
+                    <button 
+                      onClick={() => setLegalSlug('privacy-policy')} 
+                      className="font-body text-xs text-frogs-text-light/60 hover:text-frogs-gold transition-colors"
+                    >
+                      {t("Privacy Policy", "Πολιτική Απορρήτου")}
+                    </button>
+                    <button 
+                      onClick={() => setLegalSlug('terms-conditions')} 
+                      className="font-body text-xs text-frogs-text-light/60 hover:text-frogs-gold transition-colors"
+                    >
+                      {t("Terms & Conditions", "Όροι & Προϋποθέσεις")}
+                    </button>
+                    <button 
+                      onClick={() => setLegalSlug('cookies')} 
+                      className="font-body text-xs text-frogs-text-light/60 hover:text-frogs-gold transition-colors"
+                    >
+                      {t("Cookies", "Cookies")}
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      <LegalDialog 
+        slug={legalSlug} 
+        open={!!legalSlug} 
+        onOpenChange={(open) => !open && setLegalSlug(null)} 
+      />
     </footer>
   );
 }

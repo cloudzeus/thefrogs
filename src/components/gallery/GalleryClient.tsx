@@ -124,7 +124,7 @@ export default function GalleryClient({ initialImages, pageMeta }: { initialImag
             </section>
 
             {/* Filter Tabs */}
-            <section className="sticky top-0 z-30 py-6 px-6 lg:px-16 bg-[#2A2D25]/80 backdrop-blur-md border-b border-[#D9D3C6]/10">
+            <section className="sticky top-0 z-30 py-6 px-6 lg:px-16 bg-[#2A2D25]/80 backdrop-blur-md">
                 <div className="max-w-7xl mx-auto">
                     <div className="flex flex-wrap gap-2 justify-center lg:justify-start" role="tablist" aria-label={t("Gallery categories", "Κατηγορίες γκαλερί")}>
                         {categories.map((cat) => (

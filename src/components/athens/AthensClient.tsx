@@ -113,7 +113,7 @@ export default function AthensClient({ pois, pageMeta }: { pois: Poi[], pageMeta
             </div>
 
             {/* Filter Bar — built dynamically from POI tags */}
-            <div className="px-6 lg:px-16 py-8 border-b border-[#D9D3C6]/10">
+            <div className="px-6 lg:px-16 py-8">
                 <div className="max-w-7xl mx-auto flex gap-3 flex-wrap">
                     {filterOptions.map(opt => (
                         <button
