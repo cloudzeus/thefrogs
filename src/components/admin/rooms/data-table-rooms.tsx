@@ -70,7 +70,7 @@ type RoomRow = {
     descriptionEN: string | null;
     sleeps: number;
     squareMeters: number | null;
-    startingFrom: number | null;
+    startingFrom: number | string | null;
     featuredImage: string | null;
     published: boolean;
     order: number;

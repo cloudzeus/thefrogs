@@ -55,7 +55,14 @@ export default async function RoomDetailPage({
 
     const relatedRooms = await prisma.room.findMany({
         where: { published: true, slug: { not: roomId } },
-        select: { slug: true, name: true, featuredImage: true },
+        select: { 
+            slug: true, 
+            name: true, 
+            nameEN: true,
+            nameEL: true,
+            featuredImage: true,
+            images: { orderBy: { order: 'asc' }, take: 1 }
+        },
         orderBy: { order: 'asc' },
         take: 3,
     });

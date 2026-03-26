@@ -94,7 +94,7 @@ export default function RoomsClient({ rooms, pageMeta }: { rooms: Room[], pageMe
             <div ref={cardsRef} className="py-20 lg:py-32 px-6 lg:px-16">
                 <div className="max-w-7xl mx-auto space-y-20">
                     {rooms.map((room, idx) => {
-                        const image = room.featuredImage || room.images?.[0]?.url || '/images/guesthouse-room.jpg';
+                        const image = room.images?.[0]?.url || room.featuredImage || '/images/guesthouse-room.jpg';
                         const price = room.startingFrom ? t(`From €${room.startingFrom}/night`, `Από €${room.startingFrom}/νύχτα`) : null;
 
                         return (

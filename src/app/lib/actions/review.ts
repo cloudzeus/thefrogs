@@ -4,7 +4,8 @@ import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
 export async function getReviews() {
-    return await prisma.review.findMany({ orderBy: { order: "asc" } });
+    const reviews = await prisma.review.findMany({ orderBy: { order: "asc" } });
+    return JSON.parse(JSON.stringify(reviews));
 }
 
 export async function createReview(data: {

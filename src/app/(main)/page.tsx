@@ -3,6 +3,7 @@ import { getHomeSections } from '@/app/lib/actions/home-sections';
 import { getGalleryImages } from '@/app/lib/actions/gallery';
 import { getRooms } from '@/app/lib/actions/room';
 import { getPageMeta } from '@/app/lib/actions/page-meta';
+import { getReviews } from '@/app/lib/actions/review';
 import { buildMetadata, lodgingBusinessSchema, buildFaqSchema } from '@/lib/metadata';
 import type { HomeSectionRow } from '@/types/home-section';
 import Hero from '@/sections/Hero';
@@ -28,6 +29,7 @@ export default async function Home() {
   const rawSections = await getHomeSections();
   const galleryImages = await getGalleryImages();
   const dbRooms = await getRooms();
+  const dbReviews = await getReviews();
   const pageMeta = await getPageMeta('home');
   const faqQuestions = Array.isArray((pageMeta as any)?.faqSuggestions)
     ? (pageMeta as any).faqSuggestions as string[]
@@ -70,7 +72,7 @@ export default async function Home() {
             case 'amenities':
               return <Amenities key={sec.key} data={sec} />;
             case 'testimonials':
-              return <Testimonials key={sec.key} data={sec} />;
+              return <Testimonials key={sec.key} data={sec} dbReviews={dbReviews} />;
             case 'gallery':
               return <Gallery key={sec.key} data={sec} dbImages={galleryImages} />;
             case 'contactCta':

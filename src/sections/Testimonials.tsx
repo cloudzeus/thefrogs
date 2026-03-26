@@ -9,47 +9,58 @@ import type { HomeSectionRow } from '@/types/home-section';
 
 gsap.registerPlugin(ScrollTrigger);
 
-type Props = { data?: HomeSectionRow | null };
+type Props = { 
+  data?: HomeSectionRow | null;
+  dbReviews?: {
+    id: string;
+    name: string;
+    contentEL: string;
+    contentEN?: string | null;
+    titleEL?: string | null;
+    titleEN?: string | null;
+    avatar?: string | null;
+    order: number;
+  }[];
+};
 
-const testimonials = [
-  {
-    quoteEN: 'Clean, quiet, and perfectly located. The bar downstairs made it feel like we were staying with friends.',
-    quoteEL: 'Καθαρό, ήσυχο και σε τέλεια τοποθεσία. Το μπαρ στον κάτω όροφο μας έκανε να νιώθουμε ότι μένουμε με φίλους.',
-    author: 'Elena',
-    countryEN: 'Spain',
-    countryEL: 'Ισπανία',
-  },
-  {
-    quoteEN: 'We came for the price, stayed for the rooftop. The views at sunset are unforgettable.',
-    quoteEL: 'Ήρθαμε για την τιμή, μείναμε για την ταράτσα. Η θέα το ηλιοβασίλεμα είναι αξέχαστη.',
-    author: 'Marco',
-    countryEN: 'Italy',
-    countryEL: 'Ιταλία',
-  },
-  {
-    quoteEN: 'Best sleep we had in Greece. The rooms are so peaceful and the staff is wonderful.',
-    quoteEL: 'Ο καλύτερος ύπνος που είχαμε στην Ελλάδα. Τα δωμάτια είναι τόσο ήσυχα και το προσωπικό υπέροχο.',
-    author: 'Priya',
-    countryEN: 'UK',
-    countryEL: 'Ηνωμένο Βασίλειο',
-  },
-  {
-    quoteEN: 'Great location and a modern funky guest house. Very clean and nicely decorated. Receptionist waited for us when our ferry was late.',
-    quoteEL: 'Εξαιρετική τοποθεσία και ένας μοντέρνος funky ξενώνας. Πολύ καθαρό και όμορφα διακοσμημένο. Η ρεσεψιονίστ μας περίμενε όταν το πλοίο μας καθυστέρησε.',
-    author: 'Yooper',
-    countryEN: 'Switzerland',
-    countryEL: 'Ελβετία',
-  },
-  {
-    quoteEN: 'Kind staff, clean room, good coffee and breakfast. The location is great—walking distance to everything.',
-    quoteEL: 'Ευγενικό προσωπικό, καθαρό δωμάτιο, καλός καφές και πρωινό. Η τοποθεσία είναι εξαιρετική—σε κοντινή απόσταση με τα πόδια από τα πάντα.',
-    author: 'Dimitar',
-    countryEN: 'Bulgaria',
-    countryEL: 'Βουλγαρία',
-  },
-];
-
-export default function Testimonials({ data }: Props) {
+export default function Testimonials({ data, dbReviews = [] }: Props) {
+  const testimonials = dbReviews.length > 0 ? dbReviews : [
+    {
+      contentEN: 'Clean, quiet, and perfectly located. The bar downstairs made it feel like we were staying with friends.',
+      contentEL: 'Καθαρό, ήσυχο και σε τέλεια τοποθεσία. Το μπαρ στον κάτω όροφο μας έκανε να νιώθουμε ότι μένουμε με φίλους.',
+      name: 'Elena',
+      titleEN: 'Spain',
+      titleEL: 'Ισπανία',
+    },
+    {
+      contentEN: 'We came for the price, stayed for the rooftop. The views at sunset are unforgettable.',
+      contentEL: 'Ήρθαμε για την τιμή, μείναμε για την ταράτσα. Η θέα το ηλιοβασίλεμα είναι αξέχαστη.',
+      name: 'Marco',
+      titleEN: 'Italy',
+      titleEL: 'Ιταλία',
+    },
+    {
+      contentEN: 'Best sleep we had in Greece. The rooms are so peaceful and the staff is wonderful.',
+      contentEL: 'Ο καλύτερος ύπνος που είχαμε στην Ελλάδα. Τα δωμάτια είναι τόσο ήσυχα και το προσωπικό υπέροχο.',
+      name: 'Priya',
+      titleEN: 'UK',
+      titleEL: 'Ηνωμένο Βασίλειο',
+    },
+    {
+      contentEN: 'Great location and a modern funky guest house. Very clean and nicely decorated. Receptionist waited for us when our ferry was late.',
+      contentEL: 'Εξαιρετική τοποθεσία και ένας μοντέρνος funky ξενώνας. Πολύ καθαρό και όμορφα διακοσμημένο. Η ρεσεψιονίστ μας περίμενε όταν το πλοίο μας καθυστέρησε.',
+      name: 'Yooper',
+      titleEN: 'Switzerland',
+      titleEL: 'Ελβετία',
+    },
+    {
+      contentEN: 'Kind staff, clean room, good coffee and breakfast. The location is great—walking distance to everything.',
+      contentEL: 'Ευγενικό προσωπικό, καθαρό δωμάτιο, καλός καφές και πρωινό. Η τοποθεσία είναι εξαιρετική—σε κοντινή απόσταση με τα πόδια από τα πάντα.',
+      name: 'Dimitar',
+      titleEN: 'Bulgaria',
+      titleEL: 'Βουλγαρία',
+    },
+  ];
   const sectionRef = useRef<HTMLElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -122,10 +133,10 @@ export default function Testimonials({ data }: Props) {
                   }`}
               >
                 <blockquote className="font-heading text-2xl lg:text-4xl text-frogs-text-light leading-relaxed mb-8">
-                  "{t(testimonial.quoteEN, testimonial.quoteEL) || (testimonial as any).quote || ''}"
+                  "{t((testimonial as any).contentEN, (testimonial as any).contentEL) || (testimonial as any).quote || ''}"
                 </blockquote>
                 <cite className="font-body text-frogs-text-light/60 not-italic">
-                  — {testimonial.author}, {t(testimonial.countryEN, testimonial.countryEL) || (testimonial as any).country || ''}
+                  — {(testimonial as any).name || (testimonial as any).author}, {t((testimonial as any).titleEN, (testimonial as any).titleEL) || (testimonial as any).country || ''}
                 </cite>
               </div>
             ))}

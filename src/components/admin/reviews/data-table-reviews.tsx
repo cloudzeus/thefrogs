@@ -15,7 +15,7 @@ import { Badge } from "@/components/ui/badge";
 import { createReview, updateReview, deleteReview, updateReviewOrder } from "@/app/lib/actions/review";
 
 type ReviewRow = {
-    id: string; name: string; email: string | null; date: Date;
+    id: string; name: string; email: string | null; date: Date | string;
     titleEL: string | null; titleEN: string | null; contentEL: string;
     contentEN: string | null; avatar: string | null; order: number;
 };
@@ -120,7 +120,7 @@ export function DataTableReviews({ data: initialData }: { data: ReviewRow[] }) {
             ),
         },
         { accessorKey: "titleEL", header: "Title (GR)", cell: ({ row }) => <span className="text-sm">{row.original.titleEL || "—"}</span> },
-        { accessorKey: "contentEL", header: "Content", cell: ({ row }) => <span className="text-xs text-muted-foreground line-clamp-2">{row.original.contentEL}</span> },
+        { accessorKey: "contentEL", header: "Content", cell: ({ row }) => <div className="text-xs text-muted-foreground line-clamp-3 max-w-[300px] whitespace-normal leading-relaxed">{row.original.contentEL}</div> },
         { accessorKey: "date", header: "Date", cell: ({ row }) => <span className="text-xs text-muted-foreground">{new Date(row.original.date).toLocaleDateString("el-GR")}</span> },
         {
             id: "actions", header: "", enableHiding: false,

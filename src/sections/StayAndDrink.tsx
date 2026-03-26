@@ -77,12 +77,12 @@ export default function StayAndDrink({ data }: Props) {
           <div ref={bodyRef} className="flex flex-col justify-center">
             <div className="w-20 h-1 bg-frogs-gold mb-8" />
             <p className="font-body text-xl lg:text-2xl text-frogs-text-light/90 leading-relaxed mb-8 max-w-md">{body}</p>
-            <div className="flex items-center gap-6 mb-8">
+            <div className="flex items-center gap-8 mb-8">
               {stats.map((stat, i) => (
-                <div key={i} className="text-center">
-                  <span className="font-display text-4xl text-frogs-gold">{stat.value}</span>
+                <div key={i} className="flex flex-col items-center text-center">
+                  <span className="font-display text-4xl text-frogs-gold leading-none">{stat.value}</span>
                   <p className="font-body text-xs text-frogs-text-light/50 mt-1">
-                    {t(stat.labelEN, stat.labelEL)}
+                    {t(stat.labelEN, stat.labelEL) || (stat as any).label || ''}
                   </p>
                 </div>
               ))}

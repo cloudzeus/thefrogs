@@ -3,11 +3,13 @@ import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
 export async function getPageMetas() {
-    return prisma.pageMeta.findMany({ orderBy: { slug: "asc" } });
+    const metas = await prisma.pageMeta.findMany({ orderBy: { slug: "asc" } });
+    return JSON.parse(JSON.stringify(metas));
 }
 
 export async function getPageMeta(slug: string) {
-    return prisma.pageMeta.findUnique({ where: { slug } });
+    const meta = await prisma.pageMeta.findUnique({ where: { slug } });
+    return JSON.parse(JSON.stringify(meta));
 }
 
 export async function upsertPageMeta(data: {

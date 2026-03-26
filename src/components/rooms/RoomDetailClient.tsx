@@ -40,7 +40,7 @@ type Room = {
     amenities: RoomAmenity[];
     facilities: RoomFacility[];
 };
-type RelatedRoom = { slug: string; name: string; nameEN?: string | null; nameEL?: string | null; featuredImage: string | null };
+type RelatedRoom = { slug: string; name: string; nameEN?: string | null; nameEL?: string | null; featuredImage: string | null; images: { url: string }[] };
 
 export default function RoomDetailClient({
     room,
@@ -372,7 +372,7 @@ export default function RoomDetailClient({
                                 <Link key={r.slug} href={`/rooms/${r.slug}`} className="related-card group relative overflow-hidden rounded-xl">
                                     <div className="relative aspect-[4/3]">
                                         <Image
-                                            src={r.featuredImage || '/images/guesthouse-room.jpg'}
+                                            src={r.images?.[0]?.url || r.featuredImage || '/images/guesthouse-room.jpg'}
                                             alt={t(r.nameEN || r.name, r.nameEL || r.name)}
                                             fill
                                             sizes="(max-width: 768px) 100vw, 33vw"

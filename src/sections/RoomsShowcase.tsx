@@ -181,7 +181,7 @@ export default function RoomsShowcase({ data, dbRooms }: Props) {
             }}
           >
             <Image
-              src={room.featuredImage || room.images?.[0]?.url || ''}
+              src={room.images?.[0]?.url || room.featuredImage || ''}
               alt={t(room.nameEN, room.nameEL) || room.name || ''}
               fill
               sizes="500px"
@@ -201,7 +201,23 @@ export default function RoomsShowcase({ data, dbRooms }: Props) {
         <div ref={headingRef} className="mb-16 lg:mb-24">
           <span className="label-micro text-frogs-gold mb-4 block">{label}</span>
           <h2 className="font-display text-5xl lg:text-7xl text-frogs-text-light mb-6">{sectionTitle}</h2>
-          <p className="font-body text-lg text-frogs-text-light/60 max-w-xl">{sectionBody}</p>
+          <p className="font-body text-lg text-frogs-text-light/60 max-w-xl mb-12">{sectionBody}</p>
+          
+          {/* Section Stats */}
+          <div className="flex items-center gap-8 mb-12">
+            <div className="flex flex-col items-center text-center">
+              <span className="font-display text-4xl text-frogs-gold leading-none">6</span>
+              <p className="font-body text-xs text-frogs-text-light/50 mt-1">
+                {t('ROOMS', 'ΔΩΜΑΤΙΑ')}
+              </p>
+            </div>
+            <div className="flex flex-col items-center text-center">
+              <span className="font-display text-4xl text-frogs-gold leading-none">1</span>
+              <p className="font-body text-xs text-frogs-text-light/50 mt-1">
+                {t('BAR', 'BAR')}
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Rooms List - Mouse follow style */}
