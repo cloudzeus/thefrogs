@@ -153,7 +153,7 @@ export default function Bar({ data }: Props) {
               <p className="font-heading text-2xl lg:text-3xl text-frogs-gold mb-6">
                 {t(ex.breakfastSubtitleEN, ex.breakfastSubtitleEL) || (ex as any).breakfastSubtitle || ''}
               </p>
-              <p className="font-body text-frogs-text-light/70 leading-relaxed">
+              <p className="font-body text-frogs-text-light/85 leading-relaxed">
                 {t(ex.breakfastBodyEN, ex.breakfastBodyEL) || (ex as any).breakfastBody || ''}
               </p>
             </div>
@@ -180,7 +180,7 @@ export default function Bar({ data }: Props) {
                   <h4 className="font-heading text-xl text-frogs-text-light mb-2">
                     {t(f.titleEN, f.titleEL) || (f as any).title || ''}
                   </h4>
-                  <p className="font-body text-sm text-frogs-text-light/60">
+                  <p className="font-body text-sm text-frogs-text-light/80">
                     {t(f.descEN, f.descEL) || (f as any).desc || ''}
                   </p>
                 </div>
@@ -204,7 +204,7 @@ export default function Bar({ data }: Props) {
               <p className="font-heading text-2xl lg:text-3xl text-frogs-gold mb-6">
                 {t(ex.cocktailsSubtitleEN, ex.cocktailsSubtitleEL) || (ex as any).cocktailsSubtitle || ''}
               </p>
-              <p className="font-body text-frogs-text-light/70 leading-relaxed mb-8">
+              <p className="font-body text-frogs-text-light/85 leading-relaxed mb-8">
                 {t(ex.cocktailsBodyEN, ex.cocktailsBodyEL) || (ex as any).cocktailsBody || ''}
               </p>
               <div className="flex flex-wrap gap-4">
@@ -249,7 +249,7 @@ export default function Bar({ data }: Props) {
                         {t(h.labelEN, h.labelEL) || (h as any).label || ''}
                       </h4>
                       {t(h.sublabelEN || "", h.sublabelEL || "") && (
-                        <p className="font-body text-sm text-frogs-text-light/50">
+                        <p className="font-body text-sm text-frogs-text-light/75">
                           {t(h.sublabelEN || "", h.sublabelEL || "") || (h as any).sublabel || ''}
                         </p>
                       )}
@@ -259,7 +259,7 @@ export default function Bar({ data }: Props) {
                     <Clock className="w-4 h-4" />
                     <span className="font-display text-2xl">{h.time}</span>
                   </div>
-                  <p className="font-body text-sm text-frogs-text-light/60 mt-4">
+                  <p className="font-body text-sm text-frogs-text-light/85 mt-4">
                     {t(h.descEN, h.descEL) || (h as any).desc || ''}
                   </p>
                 </div>

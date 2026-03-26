@@ -50,7 +50,7 @@ export default function Amenities({ data }: Props) {
       <div className="px-6 lg:px-16 max-w-7xl mx-auto">
         <div ref={headingRef} className="mb-16">
           <h2 className="font-heading text-headline text-frogs-text-light mb-4">{title}</h2>
-          <p className="font-body text-frogs-text-light/60 text-lg">{body}</p>
+          <p className="font-body text-frogs-text-light/80 text-lg">{body}</p>
         </div>
         <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {items.map((amenity, i) => {
@@ -64,7 +64,7 @@ export default function Amenities({ data }: Props) {
                   <h3 className="font-body font-medium text-frogs-text-light mb-1">
                     {t(amenity.labelEN, amenity.labelEL) || (amenity as any).label || ''}
                   </h3>
-                  <p className="font-body text-sm text-frogs-text-light/60">
+                  <p className="font-body text-sm text-frogs-text-light/80">
                     {t(amenity.descEN, amenity.descEL) || (amenity as any).desc || ''}
                   </p>
                 </div>

@@ -106,7 +106,7 @@ export default function Gallery({ data, dbImages }: Props) {
           aria-label="Image preview"
         >
           <button
-            className="absolute top-6 right-6 p-2 text-frogs-text-light/60 hover:text-frogs-text-light transition-colors"
+            className="absolute top-6 right-6 p-2 text-frogs-text-light/90 hover:text-frogs-text-light transition-colors"
             onClick={() => setLightboxImage(null)}
             aria-label="Close preview"
           >

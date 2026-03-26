@@ -81,7 +81,7 @@ export default function StayAndDrink({ data }: Props) {
               {stats.map((stat, i) => (
                 <div key={i} className="flex flex-col items-center text-center">
                   <span className="font-display text-4xl text-frogs-gold leading-none">{stat.value}</span>
-                  <p className="font-body text-xs text-frogs-text-light/50 mt-1">
+                  <p className="font-body text-xs text-frogs-text-light/75 mt-1">
                     {t(stat.labelEN, stat.labelEL) || (stat as any).label || ''}
                   </p>
                 </div>

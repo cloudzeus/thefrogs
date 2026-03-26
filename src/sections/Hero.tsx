@@ -108,7 +108,7 @@ export default function Hero({ data }: Props) {
           {stats.map((stat, i) => (
             <div key={i} className="text-center">
               <span className="font-display text-4xl text-frogs-gold">{stat.value}</span>
-              <p className="font-body text-xs text-frogs-text-light/70 mt-1">
+              <p className="font-body text-xs text-frogs-text-light/90 mt-1">
                 {t(stat.labelEN, stat.labelEL) || (stat as any).label || ''}
               </p>
             </div>

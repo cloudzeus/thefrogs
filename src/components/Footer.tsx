@@ -28,16 +28,16 @@ export default function Footer({ legalPages = [] }: { legalPages?: LegalPageItem
     const ctx = gsap.context(() => {
       gsap.fromTo(
         content.querySelectorAll('.footer-col'),
-        { y: 40, opacity: 0 },
+        { y: 40, autoAlpha: 0 },
         {
           y: 0,
-          opacity: 1,
+          autoAlpha: 1,
           duration: 0.8,
           stagger: 0.1,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: footer,
-            start: 'top 90%',
+            start: 'top 95%',
             toggleActions: 'play none none reverse',
           },
         }
@@ -76,7 +76,7 @@ export default function Footer({ legalPages = [] }: { legalPages?: LegalPageItem
                   />
                 </div>
               </Link>
-              <p className="font-body text-frogs-text-light/70 text-sm leading-relaxed mb-6 max-w-xs">
+              <p className="font-body text-frogs-text-light/85 text-sm leading-relaxed mb-6 max-w-xs">
                 {t(
                   "A boutique guesthouse in the heart of Athens with a bar downstairs and a rooftop made for golden hour.",
                   "Ένας boutique ξενώνας στην καρδιά της Αθήνας με μπαρ στο ισόγειο και ταράτσα φτιαγμένη για το ηλιοβασίλεμα."
@@ -87,7 +87,7 @@ export default function Footer({ legalPages = [] }: { legalPages?: LegalPageItem
                   href="https://instagram.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full border border-frogs-border/20 flex items-center justify-center text-frogs-text-light/60 hover:border-frogs-gold hover:text-frogs-gold hover:bg-frogs-gold/10 transition-all duration-300"
+                  className="w-10 h-10 rounded-full border border-frogs-border/20 flex items-center justify-center text-frogs-text-light/80 hover:border-frogs-gold hover:text-frogs-gold hover:bg-frogs-gold/10 transition-all duration-300"
                   aria-label={t("Instagram (opens in new tab)", "Instagram (ανοίγει σε νέα καρτέλα)")}
                 >
                   <Instagram className="w-4 h-4" aria-hidden="true" />
@@ -96,7 +96,7 @@ export default function Footer({ legalPages = [] }: { legalPages?: LegalPageItem
                   href="https://facebook.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full border border-frogs-border/20 flex items-center justify-center text-frogs-text-light/60 hover:border-frogs-gold hover:text-frogs-gold hover:bg-frogs-gold/10 transition-all duration-300"
+                  className="w-10 h-10 rounded-full border border-frogs-border/20 flex items-center justify-center text-frogs-text-light/80 hover:border-frogs-gold hover:text-frogs-gold hover:bg-frogs-gold/10 transition-all duration-300"
                   aria-label={t("Facebook (opens in new tab)", "Facebook (ανοίγει σε νέα καρτέλα)")}
                 >
                   <Facebook className="w-4 h-4" aria-hidden="true" />
@@ -105,7 +105,7 @@ export default function Footer({ legalPages = [] }: { legalPages?: LegalPageItem
                   href="https://wa.me/+306976908878"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full border border-frogs-border/20 flex items-center justify-center text-frogs-text-light/60 hover:border-frogs-gold hover:text-frogs-gold hover:bg-frogs-gold/10 transition-all duration-300"
+                  className="w-10 h-10 rounded-full border border-frogs-border/20 flex items-center justify-center text-frogs-text-light/80 hover:border-frogs-gold hover:text-frogs-gold hover:bg-frogs-gold/10 transition-all duration-300"
                   aria-label={t("WhatsApp (opens in new tab)", "WhatsApp (ανοίγει σε νέα καρτέλα)")}
                 >
                   <MessageCircle className="w-4 h-4" aria-hidden="true" />
@@ -127,7 +127,7 @@ export default function Footer({ legalPages = [] }: { legalPages?: LegalPageItem
                 ].map((item) => (
                   <li key={item.labelEN}>
                     <Link href={item.href}
-                      className="group flex items-center gap-2 font-body text-frogs-text-light/80 hover:text-frogs-gold transition-colors duration-300"
+                      className="group flex items-center gap-2 font-body text-frogs-text-light/90 hover:text-frogs-gold transition-colors duration-300"
                     >
                       <span>{t(item.labelEN, item.labelEL)}</span>
                       <ArrowUpRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" aria-hidden="true" />
@@ -147,7 +147,7 @@ export default function Footer({ legalPages = [] }: { legalPages?: LegalPageItem
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={t("View on Google Maps (opens in new tab)", "Δείτε στο Google Maps (ανοίγει σε νέα καρτέλα)")}
-                    className="flex items-start gap-3 font-body text-frogs-text-light/80 hover:text-frogs-gold transition-colors duration-300"
+                    className="flex items-start gap-3 font-body text-frogs-text-light/90 hover:text-frogs-gold transition-colors duration-300"
                   >
                     <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0" aria-hidden="true" />
                     <span className="text-sm">
@@ -160,7 +160,7 @@ export default function Footer({ legalPages = [] }: { legalPages?: LegalPageItem
                 <li>
                   <a
                     href="tel:+302114019607"
-                    className="flex items-center gap-3 font-body text-frogs-text-light/80 hover:text-frogs-gold transition-colors duration-300"
+                    className="flex items-center gap-3 font-body text-frogs-text-light/90 hover:text-frogs-gold transition-colors duration-300"
                   >
                     <Phone className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
                     <span className="text-sm">+30 21 1401 9607</span>
@@ -169,7 +169,7 @@ export default function Footer({ legalPages = [] }: { legalPages?: LegalPageItem
                 <li>
                   <a
                     href="mailto:thefrogs.guesthouse@gmail.com"
-                    className="flex items-center gap-3 font-body text-frogs-text-light/80 hover:text-frogs-gold transition-colors duration-300"
+                    className="flex items-center gap-3 font-body text-frogs-text-light/90 hover:text-frogs-gold transition-colors duration-300"
                   >
                     <Mail className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
                     <span className="text-sm">thefrogs.guesthouse@gmail.com</span>
@@ -181,7 +181,7 @@ export default function Footer({ legalPages = [] }: { legalPages?: LegalPageItem
             {/* Book Now Column */}
             <div className="footer-col">
               <h3 className="label-micro text-frogs-gold mb-6">{t("BOOK YOUR STAY", "ΚΑΝΤΕ ΚΡΑΤΗΣΗ")}</h3>
-              <p className="font-body text-frogs-text-light/70 text-sm mb-6">
+              <p className="font-body text-frogs-text-light/85 text-sm mb-6">
                 {t(
                   "Best rates when you book direct. Questions? We're here to help.",
                   "Καλύτερες τιμές απευθείας κρατήσεις. Ερωτήσεις; Είμαστε εδώ για να βοηθήσουμε."
@@ -192,7 +192,7 @@ export default function Footer({ legalPages = [] }: { legalPages?: LegalPageItem
               >
                 {t("Send Inquiry", "Αποστολή Ερωτήματος")}
               </Link>
-              <div className="flex items-center gap-2 text-frogs-text-light/60 text-xs">
+              <div className="flex items-center gap-2 text-frogs-text-light text-xs">
                 <MessageCircle className="w-3 h-3" aria-hidden="true" />
                 <span>WhatsApp: +30 697 690 8878</span>
               </div>
@@ -202,7 +202,7 @@ export default function Footer({ legalPages = [] }: { legalPages?: LegalPageItem
           {/* Bottom Bar */}
           <div className="pt-8 border-t border-frogs-border/10">
             <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-              <p className="font-body text-xs text-frogs-text-light/60">
+              <p className="font-body text-xs text-frogs-text-light">
                 © 2018–{new Date().getFullYear()} {t("The Frogs Guesthouse · Athens, Greece", "The Frogs Guesthouse · Αθήνα, Ελλάδα")}
               </p>
               <div className="flex items-center gap-6">
@@ -211,7 +211,7 @@ export default function Footer({ legalPages = [] }: { legalPages?: LegalPageItem
                     <button 
                       key={p.slug}
                       onClick={() => setLegalSlug(p.slug)} 
-                      className="font-body text-xs text-frogs-text-light/60 hover:text-frogs-gold transition-colors"
+                      className="font-body text-xs text-frogs-text-light hover:text-frogs-gold transition-colors"
                     >
                       {t(p.titleEN || p.titleEL, p.titleEL)}
                     </button>
@@ -220,19 +220,19 @@ export default function Footer({ legalPages = [] }: { legalPages?: LegalPageItem
                   <>
                     <button 
                       onClick={() => setLegalSlug('privacy-policy')} 
-                      className="font-body text-xs text-frogs-text-light/60 hover:text-frogs-gold transition-colors"
+                      className="font-body text-xs text-frogs-text-light hover:text-frogs-gold transition-colors"
                     >
                       {t("Privacy Policy", "Πολιτική Απορρήτου")}
                     </button>
                     <button 
                       onClick={() => setLegalSlug('terms-conditions')} 
-                      className="font-body text-xs text-frogs-text-light/60 hover:text-frogs-gold transition-colors"
+                      className="font-body text-xs text-frogs-text-light hover:text-frogs-gold transition-colors"
                     >
                       {t("Terms & Conditions", "Όροι & Προϋποθέσεις")}
                     </button>
                     <button 
                       onClick={() => setLegalSlug('cookies')} 
-                      className="font-body text-xs text-frogs-text-light/60 hover:text-frogs-gold transition-colors"
+                      className="font-body text-xs text-frogs-text-light hover:text-frogs-gold transition-colors"
                     >
                       {t("Cookies", "Cookies")}
                     </button>

@@ -35,10 +35,10 @@ export default function Location({ data }: Props) {
       scrollTl
         .fromTo(media, { x: '60vw' }, { x: 0, ease: 'none' }, 0)
         .fromTo(media.querySelector('iframe'), { scale: 1.08 }, { scale: 1, ease: 'none' }, 0)
-        .fromTo(text.querySelector('.title'), { x: '-40vw', opacity: 0 }, { x: 0, opacity: 1, ease: 'none' }, 0.08)
-        .fromTo(text.querySelectorAll('.fade-in'), { y: 28, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.02, ease: 'none' }, 0.16)
-        .fromTo(media, { x: 0, opacity: 1 }, { x: '18vw', opacity: 0, ease: 'power2.in' }, 0.7)
-        .fromTo(text, { x: 0, opacity: 1 }, { x: '-18vw', opacity: 0, ease: 'power2.in' }, 0.7);
+        .fromTo(text.querySelector('.title'), { x: '-40vw', autoAlpha: 0 }, { x: 0, autoAlpha: 1, ease: 'none' }, 0.08)
+        .fromTo(text.querySelectorAll('.fade-in'), { y: 28, autoAlpha: 0 }, { y: 0, autoAlpha: 1, stagger: 0.02, ease: 'none' }, 0.16)
+        .fromTo(media, { x: 0, autoAlpha: 1 }, { x: '18vw', autoAlpha: 0, ease: 'power2.in' }, 0.7)
+        .fromTo(text, { x: 0, autoAlpha: 1 }, { x: '-18vw', autoAlpha: 0, ease: 'power2.in' }, 0.7);
     }, section);
     return () => ctx.revert();
   }, []);
@@ -56,7 +56,7 @@ export default function Location({ data }: Props) {
             <MapPin className="w-5 h-5 text-frogs-gold mt-1 flex-shrink-0" />
             <div>
               <p className="font-body text-frogs-text-light">{address}</p>
-              <p className="font-body text-frogs-text-light/70">{city}</p>
+              <p className="font-body text-frogs-text-light">{city}</p>
             </div>
           </div>
           <a href={ctaUrl} target="_blank" rel="noopener noreferrer" className="btn-secondary self-start fade-in">{ctaLabel}</a>

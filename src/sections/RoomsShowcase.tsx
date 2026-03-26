@@ -207,13 +207,13 @@ export default function RoomsShowcase({ data, dbRooms }: Props) {
           <div className="flex items-center gap-8 mb-12">
             <div className="flex flex-col items-center text-center">
               <span className="font-display text-4xl text-frogs-gold leading-none">6</span>
-              <p className="font-body text-xs text-frogs-text-light/50 mt-1">
+              <p className="font-body text-xs text-frogs-text-light/70 mt-1">
                 {t('ROOMS', 'ΔΩΜΑΤΙΑ')}
               </p>
             </div>
             <div className="flex flex-col items-center text-center">
               <span className="font-display text-4xl text-frogs-gold leading-none">1</span>
-              <p className="font-body text-xs text-frogs-text-light/50 mt-1">
+              <p className="font-body text-xs text-frogs-text-light/70 mt-1">
                 {t('BAR', 'BAR')}
               </p>
             </div>
@@ -232,7 +232,7 @@ export default function RoomsShowcase({ data, dbRooms }: Props) {
               <div className="flex items-center justify-between py-8 lg:py-10 border-t border-frogs-border/20 transition-all duration-500 group-hover:pl-4 group-hover:bg-frogs-dark/30">
                 <div className="flex items-baseline gap-6 lg:gap-12 flex-1">
                   {/* Room Number */}
-                  <span className="font-display text-4xl lg:text-6xl text-frogs-text-light/20 group-hover:text-frogs-gold transition-colors duration-500 w-16 lg:w-20">
+                  <span className="font-display text-4xl lg:text-6xl text-frogs-text-light/30 group-hover:text-frogs-gold transition-colors duration-500 w-16 lg:w-20">
                     0{index + 1}
                   </span>
 
@@ -241,17 +241,17 @@ export default function RoomsShowcase({ data, dbRooms }: Props) {
                     <h3 className="font-display text-2xl lg:text-4xl text-frogs-text-light group-hover:text-frogs-gold transition-colors duration-500 mb-2">
                       {(t(room.nameEN, room.nameEL) || (room as any).name || '').toUpperCase()}
                     </h3>
-                    <p className="font-body text-frogs-text-light/50 group-hover:text-frogs-text-light/70 transition-colors duration-500 max-w-md line-clamp-2">
+                    <p className="font-body text-frogs-text-light/70 group-hover:text-frogs-text-light/90 transition-colors duration-500 max-w-md line-clamp-2">
                       {t(room.descriptionEN, room.descriptionEL) || (room as any).description || ''}
                     </p>
                   </div>
                 </div>
 
                 <div className="hidden lg:flex items-center gap-12">
-                  <span className="font-body text-sm text-frogs-text-light/40">
+                  <span className="font-body text-sm text-frogs-text-light/60">
                     {room.squareMeters ? `${room.squareMeters} m²` : ''}
                   </span>
-                  <span className="font-body text-sm text-frogs-text-light/40">
+                  <span className="font-body text-sm text-frogs-text-light/60">
                     {t(`Up to ${room.sleeps || 2} guests`, `Έως ${room.sleeps || 2} επισκέπτες`)}
                   </span>
 

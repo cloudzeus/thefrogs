@@ -75,10 +75,10 @@ export default function Testimonials({ data, dbReviews = [] }: Props) {
     const ctx = gsap.context(() => {
       gsap.fromTo(
         card,
-        { y: 28, opacity: 0 },
+        { y: 28, autoAlpha: 0 },
         {
           y: 0,
-          opacity: 1,
+          autoAlpha: 1,
           duration: 0.8,
           ease: 'power2.out',
           scrollTrigger: {
@@ -117,7 +117,7 @@ export default function Testimonials({ data, dbReviews = [] }: Props) {
     >
       {/* Quote Mark Background */}
       <div className="absolute top-16 left-8 lg:left-16 opacity-[0.04]">
-        <Quote className="w-32 h-32 lg:w-48 lg:h-48 text-frogs-text-light" />
+        <Quote className="w-32 h-32 lg:w-48 lg:h-48 text-frogs-text-light" aria-hidden="true" />
       </div>
 
       <div className="px-6 lg:px-16 max-w-4xl mx-auto">
@@ -128,14 +128,14 @@ export default function Testimonials({ data, dbReviews = [] }: Props) {
               <div
                 key={index}
                 className={`transition-all duration-500 col-start-1 row-start-1 ${index === currentIndex
-                  ? 'opacity-100 translate-x-0 z-10'
-                  : 'opacity-0 translate-x-8 pointer-events-none'
+                  ? 'opacity-100 translate-x-0 z-10 visible'
+                  : 'opacity-0 translate-x-8 pointer-events-none invisible'
                   }`}
               >
                 <blockquote className="font-heading text-2xl lg:text-4xl text-frogs-text-light leading-relaxed mb-8">
                   "{t((testimonial as any).contentEN, (testimonial as any).contentEL) || (testimonial as any).quote || ''}"
                 </blockquote>
-                <cite className="font-body text-frogs-text-light/60 not-italic">
+                <cite className="font-body text-frogs-text-light/80 not-italic">
                   — {(testimonial as any).name || (testimonial as any).author}, {t((testimonial as any).titleEN, (testimonial as any).titleEL) || (testimonial as any).country || ''}
                 </cite>
               </div>
@@ -146,7 +146,7 @@ export default function Testimonials({ data, dbReviews = [] }: Props) {
           <div className="flex items-center justify-center gap-6">
             <button
               onClick={goToPrev}
-              className="p-2 rounded-full border border-frogs-border/30 text-frogs-text-light/60 hover:border-frogs-gold hover:text-frogs-gold transition-colors duration-300"
+              className="p-2 rounded-full border border-frogs-border/30 text-frogs-text-light/85 hover:border-frogs-gold hover:text-frogs-gold transition-colors duration-300"
               aria-label={t("Previous testimonial", "Προηγούμενη μαρτυρία")}
             >
               <ChevronLeft className="w-5 h-5" />
@@ -160,7 +160,7 @@ export default function Testimonials({ data, dbReviews = [] }: Props) {
                   onClick={() => setCurrentIndex(index)}
                   className={`w-2 h-2 rounded-full transition-all duration-300 ${index === currentIndex
                     ? 'bg-frogs-gold w-6'
-                    : 'bg-frogs-border/30 hover:bg-frogs-border/50'
+                    : 'bg-frogs-text-light/30 hover:bg-frogs-text-light/50'
                     }`}
                   aria-label={t(`Go to testimonial ${index + 1}`, `Μετάβαση στη μαρτυρία ${index + 1}`)}
                 />
@@ -169,7 +169,7 @@ export default function Testimonials({ data, dbReviews = [] }: Props) {
 
             <button
               onClick={goToNext}
-              className="p-2 rounded-full border border-frogs-border/30 text-frogs-text-light/60 hover:border-frogs-gold hover:text-frogs-gold transition-colors duration-300"
+              className="p-2 rounded-full border border-frogs-border/30 text-frogs-text-light/85 hover:border-frogs-gold hover:text-frogs-gold transition-colors duration-300"
               aria-label={t("Next testimonial", "Επόμενη μαρτυρία")}
             >
               <ChevronRight className="w-5 h-5" />
