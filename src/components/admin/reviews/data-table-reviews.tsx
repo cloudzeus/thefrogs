@@ -106,21 +106,21 @@ export function DataTableReviews({ data: initialData }: { data: ReviewRow[] }) {
         {
             accessorKey: "name", header: "Reviewer",
             cell: ({ row }) => (
-                <div className="flex items-center gap-3">
-                    {row.original.avatar ? (
-                        <img src={row.original.avatar} alt="" className="w-8 h-8 rounded-full object-cover border border-border" />
-                    ) : (
-                        <div className="w-8 h-8 rounded-full bg-zinc-200 dark:bg-zinc-700 flex items-center justify-center text-xs font-bold text-zinc-500">{row.original.name?.[0]?.toUpperCase()}</div>
-                    )}
-                    <div>
-                        <div className="font-medium text-sm">{row.original.name}</div>
-                        <div className="text-xs text-muted-foreground">{row.original.email || "—"}</div>
+                    <div className="flex items-center gap-3 max-w-[150px]">
+                        {row.original.avatar ? (
+                            <img src={row.original.avatar} alt="" className="w-8 h-8 rounded-full object-cover border border-border shrink-0" />
+                        ) : (
+                            <div className="w-8 h-8 rounded-full bg-zinc-200 dark:bg-zinc-700 flex items-center justify-center text-xs font-bold text-zinc-500 shrink-0">{row.original.name?.[0]?.toUpperCase()}</div>
+                        )}
+                        <div className="min-w-0">
+                            <div className="font-medium text-sm truncate">{row.original.name}</div>
+                            <div className="text-xs text-muted-foreground truncate">{row.original.email || "—"}</div>
+                        </div>
                     </div>
-                </div>
             ),
         },
-        { accessorKey: "titleEL", header: "Title (GR)", cell: ({ row }) => <span className="text-sm">{row.original.titleEL || "—"}</span> },
-        { accessorKey: "contentEL", header: "Content", cell: ({ row }) => <div className="text-xs text-muted-foreground line-clamp-3 max-w-[300px] whitespace-normal leading-relaxed">{row.original.contentEL}</div> },
+        { accessorKey: "titleEL", header: "Title (GR)", cell: ({ row }) => <div className="text-sm max-w-[150px] whitespace-normal line-clamp-2">{row.original.titleEL || "—"}</div> },
+        { accessorKey: "contentEL", header: "Content", cell: ({ row }) => <div className="text-xs text-muted-foreground line-clamp-3 max-w-[250px] whitespace-normal leading-relaxed">{row.original.contentEL}</div> },
         { accessorKey: "date", header: "Date", cell: ({ row }) => <span className="text-xs text-muted-foreground">{new Date(row.original.date).toLocaleDateString("el-GR")}</span> },
         {
             id: "actions", header: "", enableHiding: false,

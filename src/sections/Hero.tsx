@@ -37,9 +37,9 @@ export default function Hero({ data }: Props) {
   const { t } = useLanguage();
 
   const image = data?.image ?? DEFAULTS.image;
-  const label = t(data?.labelEN ?? DEFAULTS.labelEN, data?.labelEL ?? DEFAULTS.labelEL) || (data as any)?.label || '';
-  const rawTitle = t(data?.titleEN ?? DEFAULTS.titleEN, data?.titleEL ?? DEFAULTS.titleEL) || (data as any)?.title || '';
-  const body = t(data?.bodyEN ?? DEFAULTS.bodyEN, data?.bodyEL ?? DEFAULTS.bodyEL) || (data as any)?.body || '';
+  const label = t(data?.labelEN ?? DEFAULTS.labelEN, data?.labelEL ?? DEFAULTS.labelEL);
+  const rawTitle = t(data?.titleEN ?? DEFAULTS.titleEN, data?.titleEL ?? DEFAULTS.titleEL);
+  const body = t(data?.bodyEN ?? DEFAULTS.bodyEN, data?.bodyEL ?? DEFAULTS.bodyEL);
   const ctaLabel = t(data?.ctaLabelEN ?? DEFAULTS.ctaLabelEN, data?.ctaLabelEL ?? DEFAULTS.ctaLabelEL);
   const ctaUrl = data?.ctaUrl ?? DEFAULTS.ctaUrl;
   const cta2Label = t(data?.cta2LabelEN ?? DEFAULTS.cta2LabelEN, data?.cta2LabelEL ?? DEFAULTS.cta2LabelEL);
@@ -109,7 +109,7 @@ export default function Hero({ data }: Props) {
             <div key={i} className="text-center">
               <span className="font-display text-4xl text-frogs-gold">{stat.value}</span>
               <p className="font-body text-xs text-frogs-text-light/90 mt-1">
-                {t(stat.labelEN, stat.labelEL) || (stat as any).label || ''}
+                {t(stat.labelEN, stat.labelEL)}
               </p>
             </div>
           ))}

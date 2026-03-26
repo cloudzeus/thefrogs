@@ -24,47 +24,13 @@ type Props = {
 };
 
 export default function Testimonials({ data, dbReviews = [] }: Props) {
-  const testimonials = dbReviews.length > 0 ? dbReviews : [
-    {
-      contentEN: 'Clean, quiet, and perfectly located. The bar downstairs made it feel like we were staying with friends.',
-      contentEL: 'Καθαρό, ήσυχο και σε τέλεια τοποθεσία. Το μπαρ στον κάτω όροφο μας έκανε να νιώθουμε ότι μένουμε με φίλους.',
-      name: 'Elena',
-      titleEN: 'Spain',
-      titleEL: 'Ισπανία',
-    },
-    {
-      contentEN: 'We came for the price, stayed for the rooftop. The views at sunset are unforgettable.',
-      contentEL: 'Ήρθαμε για την τιμή, μείναμε για την ταράτσα. Η θέα το ηλιοβασίλεμα είναι αξέχαστη.',
-      name: 'Marco',
-      titleEN: 'Italy',
-      titleEL: 'Ιταλία',
-    },
-    {
-      contentEN: 'Best sleep we had in Greece. The rooms are so peaceful and the staff is wonderful.',
-      contentEL: 'Ο καλύτερος ύπνος που είχαμε στην Ελλάδα. Τα δωμάτια είναι τόσο ήσυχα και το προσωπικό υπέροχο.',
-      name: 'Priya',
-      titleEN: 'UK',
-      titleEL: 'Ηνωμένο Βασίλειο',
-    },
-    {
-      contentEN: 'Great location and a modern funky guest house. Very clean and nicely decorated. Receptionist waited for us when our ferry was late.',
-      contentEL: 'Εξαιρετική τοποθεσία και ένας μοντέρνος funky ξενώνας. Πολύ καθαρό και όμορφα διακοσμημένο. Η ρεσεψιονίστ μας περίμενε όταν το πλοίο μας καθυστέρησε.',
-      name: 'Yooper',
-      titleEN: 'Switzerland',
-      titleEL: 'Ελβετία',
-    },
-    {
-      contentEN: 'Kind staff, clean room, good coffee and breakfast. The location is great—walking distance to everything.',
-      contentEL: 'Ευγενικό προσωπικό, καθαρό δωμάτιο, καλός καφές και πρωινό. Η τοποθεσία είναι εξαιρετική—σε κοντινή απόσταση με τα πόδια από τα πάντα.',
-      name: 'Dimitar',
-      titleEN: 'Bulgaria',
-      titleEL: 'Βουλγαρία',
-    },
-  ];
+  const testimonials = dbReviews;
   const sectionRef = useRef<HTMLElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const { t } = useLanguage();
+
+  if (testimonials.length === 0) return null;
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -133,10 +99,10 @@ export default function Testimonials({ data, dbReviews = [] }: Props) {
                   }`}
               >
                 <blockquote className="font-heading text-2xl lg:text-4xl text-frogs-text-light leading-relaxed mb-8">
-                  "{t((testimonial as any).contentEN, (testimonial as any).contentEL) || (testimonial as any).quote || ''}"
+                  "{t(testimonial.contentEN || "", testimonial.contentEL) || ""}"
                 </blockquote>
                 <cite className="font-body text-frogs-text-light/80 not-italic">
-                  — {(testimonial as any).name || (testimonial as any).author}, {t((testimonial as any).titleEN, (testimonial as any).titleEL) || (testimonial as any).country || ''}
+                  — {testimonial.name}, {t(testimonial.titleEN || "", testimonial.titleEL || "") || ""}
                 </cite>
               </div>
             ))}

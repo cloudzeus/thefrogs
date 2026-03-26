@@ -24,7 +24,7 @@ export default function Location({ data }: Props) {
   const ctaUrl = data?.ctaUrl ?? 'https://maps.google.com/?q=4+Aristofanous+Str+Athens+10554+Greece';
   const address = ex.address ?? '4 Aristofanous Str.';
   const city = ex.city ?? 'Athens 10554, Greece';
-  const mapUrl = ex.mapEmbedUrl ?? 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3145.054054054054!2d23.7214!3d37.9781!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzfCsDU4JzQxLjIiTiAyM8KwNDMnMTcuMCJF!5e0!3m2!1sen!2sus!4v1234567890';
+  const mapUrl = ex.mapEmbedUrl ?? 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3144.9818451121174!2d23.7237!3d37.9782!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14a1bd3a6b1778ab%3A0x25df65cd760828b8!2sThe%20Frogs%20Guesthouse!5e0!3m2!1sen!2sgr!4v1711470000000!5m2!1sen!2sgr';
   const titleLines = rawTitle.split('\n').filter(Boolean);
 
   useEffect(() => {
@@ -62,7 +62,7 @@ export default function Location({ data }: Props) {
           <a href={ctaUrl} target="_blank" rel="noopener noreferrer" className="btn-secondary self-start fade-in">{ctaLabel}</a>
         </div>
         <div ref={mediaRef} className="hidden lg:block w-1/2 h-full relative overflow-hidden" style={{ willChange: 'transform, opacity' }}>
-          <iframe src={mapUrl} width="100%" height="100%" style={{ border: 0, filter: 'grayscale(100%) invert(92%) contrast(83%)' }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="The Frogs Guesthouse Location" className="w-full h-full" />
+          <iframe src={mapUrl} width="100%" height="100%" style={{ border: 0, filter: 'invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%)' }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="The Frogs Guesthouse Location" className="w-full h-full" />
           <div className="absolute inset-0 bg-gradient-to-l from-transparent to-frogs-dark/20 pointer-events-none" />
         </div>
       </div>

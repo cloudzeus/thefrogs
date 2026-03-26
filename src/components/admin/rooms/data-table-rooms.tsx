@@ -301,7 +301,7 @@ export function DataTableRooms({ data: initialData }: { data: RoomRow[] }) {
         },
         {
             accessorKey: "name", header: "Room Name",
-            cell: ({ row }) => <span className="font-semibold text-sm">{row.original.name}</span>,
+            cell: ({ row }) => <span className="font-semibold text-sm max-w-[200px] whitespace-normal line-clamp-2 inline-block">{row.original.name}</span>,
         },
         {
             accessorKey: "slug", header: "Slug",

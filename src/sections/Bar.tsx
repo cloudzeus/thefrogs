@@ -12,16 +12,6 @@ gsap.registerPlugin(ScrollTrigger);
 type Props = { data?: HomeSectionRow | null };
 
 type BarExtras = {
-  breakfastImage?: string;
-  breakfastLabelEN?: string;
-  breakfastLabelEL?: string;
-  breakfastTitleEN?: string;
-  breakfastTitleEL?: string;
-  breakfastSubtitleEN?: string;
-  breakfastSubtitleEL?: string;
-  breakfastBodyEN?: string;
-  breakfastBodyEL?: string;
-  breakfastFeatures?: { icon: string; titleEN: string; titleEL: string; descEN: string; descEL: string }[];
   cocktailsImage?: string;
   cocktailsLabelEN?: string;
   cocktailsLabelEL?: string;
@@ -40,20 +30,6 @@ type BarExtras = {
 const iconMap: Record<string, React.ElementType> = { Sun, Utensils, Coffee, Wine, Clock, Moon };
 
 const DEFAULT_EXTRAS: Required<BarExtras> = {
-  breakfastImage: '/images/Th_Frogs_96.jpg',
-  breakfastLabelEN: 'GOOD MORNING',
-  breakfastLabelEL: 'ΚΑΛΗΜΕΡΑ',
-  breakfastTitleEN: 'THE FROGS BREAKFAST',
-  breakfastTitleEL: 'ΤΟ ΠΡΩΙΝΟ ΤΟΥ THE FROGS',
-  breakfastSubtitleEN: 'Our kind of wake up call',
-  breakfastSubtitleEL: 'Ο δικός μας τρόπος για να ξυπνήσετε',
-  breakfastBodyEN: 'Our rich breakfast offers many delicious options, giving a tasty culinary touch to your holiday.',
-  breakfastBodyEL: 'Το πλούσιο πρωινό μας προσφέρει πολλές νόστιμες επιλογές, δίνοντας μια γευστική γαστρονομική πινελιά στις διακοπές σας.',
-  breakfastFeatures: [
-    { icon: 'Sun', titleEN: 'Fresh & Healthy', titleEL: 'Φρέσκο & Υγιεινό', descEN: 'Full of energy in every bite', descEL: 'Γεμάτο ενέργεια σε κάθε μπουκιά' },
-    { icon: 'Utensils', titleEN: 'Regional Quality', titleEL: 'Τοπική Ποιότητα', descEN: '100% convinced by local produce', descEL: '100% τοπικά προϊόντα' },
-    { icon: 'Coffee', titleEN: 'Homemade Delights', titleEL: 'Σπιτικές Λιχουδιές', descEN: 'Fruit spreads, jams & pastries', descEL: 'Μαρμελάδες, γλυκά & αρτοσκευάσματα' },
-  ],
   cocktailsImage: '/images/Th_Frogs_98.jpg',
   cocktailsLabelEN: 'EVENING VIBES',
   cocktailsLabelEL: 'ΒΡΑΔΙΝΗ ΑΤΜΟΣΦΑΙΡΑ',
@@ -66,7 +42,7 @@ const DEFAULT_EXTRAS: Required<BarExtras> = {
   cocktailTagsEN: ['Classic Recipes', 'Fresh Ingredients', 'Urban Vibes'],
   cocktailTagsEL: ['Κλασικές Συνταγές', 'Φρέσκα Υλικά', 'Urban Vibes'],
   hours: [
-    { icon: 'Coffee', labelEN: 'Breakfast', labelEL: 'Πρωινό', sublabelEN: 'Start your day right', sublabelEL: 'Ξεκινήστε σωστά τη μέρα σας', time: '08:00 - 12:00', descEN: 'Daily — Enjoy our delicious breakfast with regional foodstuffs', descEL: 'Καθημερινά — Απολαύστε το νόστιμο πρωινό μας με τοπικά προϊόντα' },
+    { icon: 'Coffee', labelEN: 'Breakfast', labelEL: 'Πρωινό', sublabelEN: 'Start your day right', sublabelEL: 'Ξεκινήστε σωστά τη μέρα σας', time: '08:00 - 12:00', descEN: 'Daily — Enjoy our delicious breakfast with regional foodstuffs', descEL: 'Καθημερινά — Απολαύστε το νόσιτμο πρωινό μας με τοπικά προϊόντα' },
     { icon: 'Wine', labelEN: 'All Day Bar', labelEL: 'All Day Bar', sublabelEN: 'Coffee, snacks & treats', sublabelEL: 'Καφές, σνακ & λιχουδιές', time: 'ALL DAY', descEN: 'Browse through our wide selection of mouthwatering snacks and sweet treats', descEL: 'Περιηγηθείτε στη μεγάλη ποικιλιλία από λαχταριστά σνακ και γλυκά' },
   ],
   galleryImages: ['/images/Th_Frogs_86.jpg', '/images/Th_Frogs_94.jpg', '/images/Th_Frogs_96.jpg', '/images/Th_Frogs_98.jpg'],
@@ -75,7 +51,6 @@ const DEFAULT_EXTRAS: Required<BarExtras> = {
 export default function Bar({ data }: Props) {
   const sectionRef = useRef<HTMLElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
-  const breakfastRef = useRef<HTMLDivElement>(null);
   const cocktailsRef = useRef<HTMLDivElement>(null);
   const hoursRef = useRef<HTMLDivElement>(null);
   const galleryRef = useRef<HTMLDivElement>(null);
@@ -95,10 +70,6 @@ export default function Bar({ data }: Props) {
       if (heroRef.current) {
         gsap.fromTo(heroRef.current.querySelector('.hero-image'), { scale: 1.1, opacity: 0.7 }, { scale: 1, opacity: 1, duration: 1.2, ease: 'power2.out', scrollTrigger: { trigger: heroRef.current, start: 'top 80%', toggleActions: 'play none none reverse' } });
         gsap.fromTo(heroRef.current.querySelector('.hero-content'), { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: heroRef.current, start: 'top 70%', toggleActions: 'play none none reverse' } });
-      }
-      if (breakfastRef.current) {
-        gsap.fromTo(breakfastRef.current.querySelector('.breakfast-title'), { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: breakfastRef.current, start: 'top 75%', toggleActions: 'play none none reverse' } });
-        gsap.fromTo(breakfastRef.current.querySelectorAll('.feature-card'), { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, stagger: 0.15, ease: 'power2.out', scrollTrigger: { trigger: breakfastRef.current, start: 'top 65%', toggleActions: 'play none none reverse' } });
       }
       if (cocktailsRef.current) {
         gsap.fromTo(cocktailsRef.current.querySelector('.cocktails-content'), { x: -60, opacity: 0 }, { x: 0, opacity: 1, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: cocktailsRef.current, start: 'top 70%', toggleActions: 'play none none reverse' } });
@@ -139,73 +110,22 @@ export default function Bar({ data }: Props) {
         </div>
       </div>
 
-      {/* Breakfast */}
-      <div ref={breakfastRef} className="py-20 lg:py-32 px-6 lg:px-16">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center mb-16">
-            <div className="breakfast-title">
-              <span className="label-micro text-frogs-gold mb-4 block">
-                {t(ex.breakfastLabelEN, ex.breakfastLabelEL) || (ex as any).breakfastLabel || ''}
-              </span>
-              <h3 className="font-display text-4xl lg:text-6xl text-frogs-text-light mb-6">
-                {t(ex.breakfastTitleEN, ex.breakfastTitleEL) || (ex as any).breakfastTitle || ''}
-              </h3>
-              <p className="font-heading text-2xl lg:text-3xl text-frogs-gold mb-6">
-                {t(ex.breakfastSubtitleEN, ex.breakfastSubtitleEL) || (ex as any).breakfastSubtitle || ''}
-              </p>
-              <p className="font-body text-frogs-text-light/85 leading-relaxed">
-                {t(ex.breakfastBodyEN, ex.breakfastBodyEL) || (ex as any).breakfastBody || ''}
-              </p>
-            </div>
-            <div className="relative h-[400px] lg:h-[500px] rounded-2xl overflow-hidden">
-              <Image
-                src={ex.breakfastImage}
-                alt={t("Breakfast at The Frogs", "Πρωινό στο The Frogs")}
-                fill
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-frogs-dark/40 to-transparent" />
-            </div>
-          </div>
-          <div className="grid md:grid-cols-3 gap-6">
-            {ex.breakfastFeatures.map((f, i) => {
-              const Icon = iconMap[f.icon] ?? Coffee;
-              return (
-                <div key={i} className="feature-card p-8 rounded-2xl bg-frogs-dark/50 border border-frogs-border/10 hover:border-frogs-gold/30 transition-all duration-500 group">
-                  <div className="w-14 h-14 rounded-full bg-frogs-gold/10 flex items-center justify-center mb-6 group-hover:bg-frogs-gold/20 transition-colors">
-                    <Icon className="w-6 h-6 text-frogs-gold" />
-                  </div>
-                  <h4 className="font-heading text-xl text-frogs-text-light mb-2">
-                    {t(f.titleEN, f.titleEL) || (f as any).title || ''}
-                  </h4>
-                  <p className="font-body text-sm text-frogs-text-light/80">
-                    {t(f.descEN, f.descEL) || (f as any).desc || ''}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-
       {/* Cocktails */}
       <div ref={cocktailsRef} className="py-20 lg:py-32 px-6 lg:px-16 bg-frogs-dark/50">
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <div className="cocktails-content order-2 lg:order-1">
               <span className="label-micro text-frogs-gold mb-4 block">
-                {t(ex.cocktailsLabelEN, ex.cocktailsLabelEL) || (ex as any).cocktailsLabel || ''}
+                {t(ex.cocktailsLabelEN, ex.cocktailsLabelEL)}
               </span>
               <h3 className="font-display text-4xl lg:text-6xl text-frogs-text-light mb-6">
-                {t(ex.cocktailsTitleEN, ex.cocktailsTitleEL) || (ex as any).cocktailsTitle || ''}
+                {t(ex.cocktailsTitleEN, ex.cocktailsTitleEL)}
               </h3>
               <p className="font-heading text-2xl lg:text-3xl text-frogs-gold mb-6">
-                {t(ex.cocktailsSubtitleEN, ex.cocktailsSubtitleEL) || (ex as any).cocktailsSubtitle || ''}
+                {t(ex.cocktailsSubtitleEN, ex.cocktailsSubtitleEL)}
               </p>
               <p className="font-body text-frogs-text-light/85 leading-relaxed mb-8">
-                {t(ex.cocktailsBodyEN, ex.cocktailsBodyEL) || (ex as any).cocktailsBody || ''}
+                {t(ex.cocktailsBodyEN, ex.cocktailsBodyEL)}
               </p>
               <div className="flex flex-wrap gap-4">
                 {(language === 'GR' ? ex.cocktailTagsEL : ex.cocktailTagsEN).map((tag, i) => (
@@ -246,13 +166,9 @@ export default function Bar({ data }: Props) {
                     </div>
                     <div>
                       <h4 className="font-heading text-xl text-frogs-text-light">
-                        {t(h.labelEN, h.labelEL) || (h as any).label || ''}
+                        {t(h.labelEN, h.labelEL)}
                       </h4>
-                      {t(h.sublabelEN || "", h.sublabelEL || "") && (
-                        <p className="font-body text-sm text-frogs-text-light/75">
-                          {t(h.sublabelEN || "", h.sublabelEL || "") || (h as any).sublabel || ''}
-                        </p>
-                      )}
+                          {t(h.sublabelEN || "", h.sublabelEL || "")}
                     </div>
                   </div>
                   <div className="flex items-center gap-2 text-frogs-gold">
@@ -260,7 +176,7 @@ export default function Bar({ data }: Props) {
                     <span className="font-display text-2xl">{h.time}</span>
                   </div>
                   <p className="font-body text-sm text-frogs-text-light/85 mt-4">
-                    {t(h.descEN, h.descEL) || (h as any).desc || ''}
+                    {t(h.descEN, h.descEL)}
                   </p>
                 </div>
               );

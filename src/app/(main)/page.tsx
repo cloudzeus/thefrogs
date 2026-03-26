@@ -12,6 +12,7 @@ import RoomsShowcase from '@/sections/RoomsShowcase';
 import Guesthouse from '@/sections/Guesthouse';
 import SecondBuilding from '@/sections/SecondBuilding';
 import Bar from '@/sections/Bar';
+import Breakfast from '@/sections/Breakfast';
 import Location from '@/sections/Location';
 import Amenities from '@/sections/Amenities';
 import Testimonials from '@/sections/Testimonials';
@@ -67,6 +68,8 @@ export default async function Home() {
               return <SecondBuilding key={sec.key} data={sec} />;
             case 'bar':
               return <Bar key={sec.key} data={sec} />;
+            case 'breakfast':
+              return <Breakfast key={sec.key} data={sec} />;
             case 'location':
               return <Location key={sec.key} data={sec} />;
             case 'amenities':

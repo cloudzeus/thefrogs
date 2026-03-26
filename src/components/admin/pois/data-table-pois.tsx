@@ -661,15 +661,15 @@ export function DataTablePois({ data: initialData }: { data: PoiRow[] }) {
         {
             accessorKey: "titleEL", header: "Title (GR)",
             cell: ({ row }) => (
-                <div>
-                    <p className="font-semibold text-sm">{row.original.titleEL}</p>
+                <div className="max-w-[200px] whitespace-normal">
+                    <p className="font-semibold text-sm line-clamp-2">{row.original.titleEL}</p>
                     {row.original.category && <p className="text-xs text-muted-foreground">{row.original.category}</p>}
                 </div>
             ),
         },
         {
             accessorKey: "titleEN", header: "Title (EN)",
-            cell: ({ row }) => <span className="text-sm text-muted-foreground">{row.original.titleEN || "—"}</span>,
+            cell: ({ row }) => <span className="text-sm text-muted-foreground max-w-[200px] whitespace-normal line-clamp-2 inline-block">{row.original.titleEN || "—"}</span>,
         },
         {
             id: "location", header: "Coordinates",
