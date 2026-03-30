@@ -108,6 +108,17 @@ export default function RoomDetailClient({
         setCurrentImage(0);
     }, [room.slug]);
 
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (!lightboxOpen) return;
+            if (e.key === 'Escape') setLightboxOpen(false);
+            if (e.key === 'ArrowRight') setLightboxIndex((p) => (p + 1) % allImages.length);
+            if (e.key === 'ArrowLeft') setLightboxIndex((p) => (p - 1 + allImages.length) % allImages.length);
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [lightboxOpen, allImages.length]);
+
     const price = room.startingFrom ? t(`From €${room.startingFrom}/night`, `Από €${room.startingFrom}/νύχτα`) : null;
 
     return (
@@ -195,9 +206,9 @@ export default function RoomDetailClient({
                     </div>
                 </div>
 
-                {/* Image Nav */}
+                {/* Image Nav - Desktop */}
                 {allImages.length > 1 && (
-                    <div className="absolute bottom-8 right-8 z-20 flex items-center gap-4">
+                    <div className="hidden lg:flex absolute bottom-16 right-16 z-20 items-center gap-4">
                         <button
                             onClick={() => setCurrentImage((p) => (p - 1 + allImages.length) % allImages.length)}
                             className="w-12 h-12 rounded-full bg-[#2A2D25]/50 backdrop-blur-sm border border-[#D9D3C6]/30 flex items-center justify-center text-[#F9F6EF] hover:bg-[#C9A84C] hover:border-[#C9A84C] hover:text-[#2A2D25] transition-all"
@@ -221,7 +232,38 @@ export default function RoomDetailClient({
                         </button>
                     </div>
                 )}
-            </div>
+
+                {/* Image Nav - Mobile */}
+                {allImages.length > 1 && (
+                    <>
+                        <div className="lg:hidden absolute inset-y-0 left-0 right-0 flex items-center justify-between px-4 pointer-events-none z-20">
+                            <button
+                                onClick={() => setCurrentImage((p) => (p - 1 + allImages.length) % allImages.length)}
+                                className="w-10 h-10 rounded-full bg-[#2A2D25]/30 backdrop-blur-sm border border-[#D9D3C6]/20 flex items-center justify-center text-[#F9F6EF] pointer-events-auto active:scale-95 transition-transform"
+                                aria-label="Previous image"
+                            >
+                                <ChevronLeft className="w-5 h-5" />
+                            </button>
+                            <button
+                                onClick={() => setCurrentImage((p) => (p + 1) % allImages.length)}
+                                className="w-10 h-10 rounded-full bg-[#2A2D25]/30 backdrop-blur-sm border border-[#D9D3C6]/20 flex items-center justify-center text-[#F9F6EF] pointer-events-auto active:scale-95 transition-transform"
+                                aria-label="Next image"
+                            >
+                                <ChevronRight className="w-5 h-5" />
+                            </button>
+                        </div>
+                        <div className="lg:hidden absolute top-24 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+                            {allImages.map((_, i) => (
+                                <button
+                                    key={i}
+                                    onClick={() => setCurrentImage(i)}
+                                    className={`h-1.5 rounded-full transition-all ${i === currentImage ? 'bg-[#C9A84C] w-4' : 'bg-[#F9F6EF]/30 w-1.5'}`}
+                                />
+                            ))}
+                        </div>
+                    </>
+                )}
+</div>
 
             {/* Info Section */}
             <div ref={infoRef} className="py-20 lg:py-32 px-6 lg:px-16">
@@ -398,38 +440,64 @@ export default function RoomDetailClient({
 
             {/* Lightbox */}
             {lightboxOpen && (
-                <div className="fixed inset-0 z-[100] bg-[#2A2D25]/98 backdrop-blur-lg flex items-center justify-center">
+                <div 
+                    className="fixed inset-0 z-[100] bg-[#2A2D25]/98 backdrop-blur-lg flex items-center justify-center animate-in fade-in duration-300"
+                    onClick={() => setLightboxOpen(false)}
+                >
+                    {/* Header Controls */}
+                    <div className="absolute top-0 left-0 right-0 p-6 flex justify-between items-center z-[110]">
+                        <button
+                            onClick={() => setLightboxOpen(false)}
+                            className="flex items-center gap-2 text-[#F9F6EF]/80 hover:text-[#C9A84C] transition-colors"
+                        >
+                            <ArrowLeft className="w-5 h-5" />
+                            <span className="font-body text-sm font-medium">{t("Back to Room", "Επιστροφή στο Δωμάτιο")}</span>
+                        </button>
+                        
+                        <button
+                            onClick={() => setLightboxOpen(false)}
+                            className="w-12 h-12 rounded-full bg-[#2A2D25]/50 border border-[#D9D3C6]/30 flex items-center justify-center text-[#F9F6EF] hover:bg-[#C9A84C] hover:text-[#2A2D25] transition-all"
+                        >
+                            <X className="w-6 h-6" />
+                        </button>
+                    </div>
+
+                    {/* Navigation Buttons */}
                     <button
-                        onClick={() => setLightboxOpen(false)}
-                        className="absolute top-6 right-6 w-12 h-12 rounded-full bg-[#2A2D25]/50 border border-[#D9D3C6]/30 flex items-center justify-center text-[#F9F6EF] hover:bg-[#C9A84C] hover:text-[#2A2D25] transition-all"
+                        onClick={(e) => { e.stopPropagation(); setLightboxIndex((p) => (p - 1 + allImages.length) % allImages.length); }}
+                        className="absolute left-6 w-14 h-14 rounded-full bg-[#2A2D25]/50 border border-[#D9D3C6]/30 flex items-center justify-center text-[#F9F6EF] hover:bg-[#C9A84C] hover:text-[#2A2D25] transition-all z-[110]"
                     >
-                        <X className="w-6 h-6" />
+                        <ChevronLeft className="w-8 h-8" />
                     </button>
-                    <button
-                        onClick={() => setLightboxIndex((p) => (p - 1 + allImages.length) % allImages.length)}
-                        className="absolute left-6 w-12 h-12 rounded-full bg-[#2A2D25]/50 border border-[#D9D3C6]/30 flex items-center justify-center text-[#F9F6EF] hover:bg-[#C9A84C] hover:text-[#2A2D25] transition-all"
-                    >
-                        <ChevronLeft className="w-6 h-6" />
-                    </button>
-                    <div className="relative max-w-[90vw] max-h-[85vh] w-full h-[85vh]" onClick={(e) => e.stopPropagation()}>
+
+                    {/* Image Container */}
+                    <div className="relative max-w-[90vw] max-h-[85vh] w-full h-[85vh] flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
                         <Image
                             src={allImages[lightboxIndex]}
-                            alt={t(`${room.nameEN || room.name} full view`, `${room.nameEL || room.name} πλήρης άποψη`)}
+                            alt={t(`${room.nameEN || room.name} full view - ${lightboxIndex + 1}`, `${room.nameEL || room.name} πλήρης άποψη - ${lightboxIndex + 1}`)}
                             fill
                             sizes="90vw"
-                            className="object-contain rounded-lg"
+                            className="object-contain rounded-lg drop-shadow-2xl"
                             priority
                         />
                     </div>
+
                     <button
-                        onClick={() => setLightboxIndex((p) => (p + 1) % allImages.length)}
-                        className="absolute right-6 w-12 h-12 rounded-full bg-[#2A2D25]/50 border border-[#D9D3C6]/30 flex items-center justify-center text-[#F9F6EF] hover:bg-[#C9A84C] hover:text-[#2A2D25] transition-all"
+                        onClick={(e) => { e.stopPropagation(); setLightboxIndex((p) => (p + 1) % allImages.length); }}
+                        className="absolute right-6 w-14 h-14 rounded-full bg-[#2A2D25]/50 border border-[#D9D3C6]/30 flex items-center justify-center text-[#F9F6EF] hover:bg-[#C9A84C] hover:text-[#2A2D25] transition-all z-[110]"
                     >
-                        <ChevronRight className="w-6 h-6" />
+                        <ChevronRight className="w-8 h-8" />
                     </button>
-                    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
+
+                    {/* Indicators */}
+                    <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3 z-[110]" onClick={(e) => e.stopPropagation()}>
                         {allImages.map((_, i) => (
-                            <button key={i} onClick={() => setLightboxIndex(i)} className={`h-2 rounded-full transition-all ${i === lightboxIndex ? 'bg-[#C9A84C] w-6' : 'bg-[#F9F6EF]/30 w-2'}`} />
+                            <button 
+                                key={i} 
+                                onClick={() => setLightboxIndex(i)} 
+                                className={`h-2 rounded-full transition-all duration-300 ${i === lightboxIndex ? 'bg-[#C9A84C] w-8' : 'bg-[#F9F6EF]/20 w-2 hover:bg-[#F9F6EF]/40'}`} 
+                                aria-label={`Go to image ${i + 1}`}
+                            />
                         ))}
                     </div>
                 </div>
