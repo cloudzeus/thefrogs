@@ -84,7 +84,7 @@ export default function Footer({ legalPages = [] }: { legalPages?: LegalPageItem
               </p>
               <div className="flex gap-3">
                 <a
-                  href="https://instagram.com"
+                  href="https://www.instagram.com/thefrogs_guesthouse?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded-full border border-frogs-border/20 flex items-center justify-center text-frogs-text-light/80 hover:border-frogs-gold hover:text-frogs-gold hover:bg-frogs-gold/10 transition-all duration-300"
@@ -93,7 +93,7 @@ export default function Footer({ legalPages = [] }: { legalPages?: LegalPageItem
                   <Instagram className="w-4 h-4" aria-hidden="true" />
                 </a>
                 <a
-                  href="https://facebook.com"
+                  href="https://www.facebook.com/thefrogs.guesthouse"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded-full border border-frogs-border/20 flex items-center justify-center text-frogs-text-light/80 hover:border-frogs-gold hover:text-frogs-gold hover:bg-frogs-gold/10 transition-all duration-300"
@@ -143,7 +143,7 @@ export default function Footer({ legalPages = [] }: { legalPages?: LegalPageItem
               <ul className="space-y-4">
                 <li>
                   <a
-                    href="https://maps.google.com/?q=4+Aristofanous+Str+Athens+10554+Greece"
+                    href="https://maps.google.com/?q=The+Frogs+Guest+House+Athens"
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={t("View on Google Maps (opens in new tab)", "Δείτε στο Google Maps (ανοίγει σε νέα καρτέλα)")}

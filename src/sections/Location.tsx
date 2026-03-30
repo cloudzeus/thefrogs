@@ -21,10 +21,10 @@ export default function Location({ data }: Props) {
   const rawTitle = t(data?.titleEN ?? 'THE\nLOCATION', data?.titleEL ?? 'Η\nΤΟΠΟΘΕΣΙΑ') || (data as any)?.title || '';
   const body = t(data?.bodyEN ?? "We're in Psyri—walking distance to the Acropolis, the market, and late-night spots. Quiet street, central everything.", data?.bodyEL ?? 'Βρισκόμαστε στον Ψυρρή — σε απόσταση βόλτας από την Ακρόπολη, την αγορά και τα νυχτερινά μαγαζιά.') || (data as any)?.body || '';
   const ctaLabel = t(data?.ctaLabelEN ?? 'Get Directions', data?.ctaLabelEL ?? 'Οδηγίες');
-  const ctaUrl = data?.ctaUrl ?? 'https://maps.google.com/?q=4+Aristofanous+Str+Athens+10554+Greece';
+  const ctaUrl = data?.ctaUrl ?? 'https://maps.google.com/?q=The+Frogs+Guest+House+Athens';
   const address = ex.address ?? '4 Aristofanous Str.';
   const city = ex.city ?? 'Athens 10554, Greece';
-  const mapUrl = ex.mapEmbedUrl ?? 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3144.9818451121174!2d23.7237!3d37.9782!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14a1bd3a6b1778ab%3A0x25df65cd760828b8!2sThe%20Frogs%20Guesthouse!5e0!3m2!1sen!2sgr!4v1711470000000!5m2!1sen!2sgr';
+  const mapUrl = ex.mapEmbedUrl ?? 'https://maps.google.com/maps?q=The+Frogs+Guest+House+Athens&t=&z=16&ie=UTF8&iwloc=&output=embed';
   const titleLines = rawTitle.split('\n').filter(Boolean);
 
   useEffect(() => {

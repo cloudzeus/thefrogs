@@ -413,10 +413,10 @@ export default function Athens() {
             </div>
             <div className="relative h-[400px] lg:h-[500px] rounded-2xl overflow-hidden">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3145.054054054054!2d23.7214!3d37.9781!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzfCsDU4JzQxLjIiTiAyM8KwNDMnMTcuMCJF!5e0!3m2!1sen!2sus!4v1234567890"
+                src="https://maps.google.com/maps?q=The+Frogs+Guest+House+Athens&t=&z=16&ie=UTF8&iwloc=&output=embed"
                 width="100%"
                 height="100%"
-                style={{ border: 0, filter: 'grayscale(100%) invert(92%) contrast(83%)' }}
+                style={{ border: 0, filter: 'invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%)' }}
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"

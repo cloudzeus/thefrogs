@@ -272,10 +272,10 @@ export default function Contact({ pageMeta }: { pageMeta?: any }) {
       {/* Map */}
       <section className="h-[50vh] lg:h-[60vh]">
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3144.928231084632!2d23.722341611717937!3d37.97880417181769!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14a1bd2379951db3%3A0xcf5c123d7108b3ae!2sThe%20Frogs%20Guesthouse!5e0!3m2!1sel!2sgr!4v1774883905579!5m2!1sel!2sgr"
+          src="https://maps.google.com/maps?q=The+Frogs+Guest+House+Athens&t=&z=16&ie=UTF8&iwloc=&output=embed"
           width="100%"
           height="100%"
-          style={{ border: 0, filter: 'grayscale(100%) invert(92%) contrast(83%)' }}
+          style={{ border: 0, filter: 'invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%)' }}
           allowFullScreen
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"

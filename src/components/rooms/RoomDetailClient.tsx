@@ -444,34 +444,27 @@ export default function RoomDetailClient({
                     className="fixed inset-0 z-[100] bg-[#2A2D25]/98 backdrop-blur-lg flex items-center justify-center animate-in fade-in duration-300"
                     onClick={() => setLightboxOpen(false)}
                 >
-                    {/* Header Controls */}
-                    <div className="absolute top-0 left-0 right-0 p-6 flex justify-between items-center z-[110]">
-                        <button
-                            onClick={() => setLightboxOpen(false)}
-                            className="flex items-center gap-2 text-[#F9F6EF]/80 hover:text-[#C9A84C] transition-colors"
-                        >
-                            <ArrowLeft className="w-5 h-5" />
-                            <span className="font-body text-sm font-medium">{t("Back to Room", "Επιστροφή στο Δωμάτιο")}</span>
-                        </button>
-                        
-                        <button
-                            onClick={() => setLightboxOpen(false)}
-                            className="w-12 h-12 rounded-full bg-[#2A2D25]/50 border border-[#D9D3C6]/30 flex items-center justify-center text-[#F9F6EF] hover:bg-[#C9A84C] hover:text-[#2A2D25] transition-all"
-                        >
-                            <X className="w-6 h-6" />
-                        </button>
-                    </div>
-
-                    {/* Navigation Buttons */}
-                    <button
-                        onClick={(e) => { e.stopPropagation(); setLightboxIndex((p) => (p - 1 + allImages.length) % allImages.length); }}
-                        className="absolute left-6 w-14 h-14 rounded-full bg-[#2A2D25]/50 border border-[#D9D3C6]/30 flex items-center justify-center text-[#F9F6EF] hover:bg-[#C9A84C] hover:text-[#2A2D25] transition-all z-[110]"
-                    >
-                        <ChevronLeft className="w-8 h-8" />
-                    </button>
-
                     {/* Image Container */}
-                    <div className="relative max-w-[90vw] max-h-[85vh] w-full h-[85vh] flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
+                    <div className="relative max-w-[90vw] max-h-[85vh] w-full h-[85vh] flex items-center justify-center p-4" onClick={(e) => e.stopPropagation()}>
+                        {/* Control Buttons Inside Image Container */}
+                        <div className="absolute top-4 left-4 right-4 flex justify-between items-center z-[120]">
+                            <button
+                                onClick={() => setLightboxOpen(false)}
+                                className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#2A2D25]/60 backdrop-blur-md border border-[#D9D3C6]/30 text-[#F9F6EF]/90 hover:text-[#C9A84C] hover:border-[#C9A84C]/50 transition-all font-body text-xs"
+                            >
+                                <ArrowLeft className="w-4 h-4" />
+                                <span className="font-medium uppercase tracking-wider">{t("Back", "Πίσω")}</span>
+                            </button>
+                            
+                            <button
+                                onClick={() => setLightboxOpen(false)}
+                                className="w-10 h-10 rounded-full bg-[#2A2D25]/60 backdrop-blur-md border border-[#D9D3C6]/30 flex items-center justify-center text-[#F9F6EF] hover:bg-[#C9A84C] hover:text-[#2A2D25] transition-all"
+                                aria-label={t("Close gallery", "Κλείσιμο γκαλερί")}
+                            >
+                                <X className="w-5 h-5" />
+                            </button>
+                        </div>
+
                         <Image
                             src={allImages[lightboxIndex]}
                             alt={t(`${room.nameEN || room.name} full view - ${lightboxIndex + 1}`, `${room.nameEL || room.name} πλήρης άποψη - ${lightboxIndex + 1}`)}
@@ -482,12 +475,23 @@ export default function RoomDetailClient({
                         />
                     </div>
 
+                    {/* Navigation Buttons Restored */}
+                    <button
+                        onClick={(e) => { e.stopPropagation(); setLightboxIndex((p) => (p - 1 + allImages.length) % allImages.length); }}
+                        className="absolute left-6 w-12 h-12 lg:w-14 lg:h-14 rounded-full bg-[#2A2D25]/50 border border-[#D9D3C6]/30 flex items-center justify-center text-[#F9F6EF] hover:bg-[#C9A84C] hover:text-[#2A2D25] transition-all z-[110]"
+                        aria-label="Previous image"
+                    >
+                        <ChevronLeft className="w-6 h-6 lg:w-8 lg:h-8" />
+                    </button>
+
                     <button
                         onClick={(e) => { e.stopPropagation(); setLightboxIndex((p) => (p + 1) % allImages.length); }}
-                        className="absolute right-6 w-14 h-14 rounded-full bg-[#2A2D25]/50 border border-[#D9D3C6]/30 flex items-center justify-center text-[#F9F6EF] hover:bg-[#C9A84C] hover:text-[#2A2D25] transition-all z-[110]"
+                        className="absolute right-6 w-12 h-12 lg:w-14 lg:h-14 rounded-full bg-[#2A2D25]/50 border border-[#D9D3C6]/30 flex items-center justify-center text-[#F9F6EF] hover:bg-[#C9A84C] hover:text-[#2A2D25] transition-all z-[110]"
+                        aria-label="Next image"
                     >
-                        <ChevronRight className="w-8 h-8" />
+                        <ChevronRight className="w-6 h-6 lg:w-8 lg:h-8" />
                     </button>
+
 
                     {/* Indicators */}
                     <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3 z-[110]" onClick={(e) => e.stopPropagation()}>
