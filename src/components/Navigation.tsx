@@ -50,7 +50,8 @@ export default function Navigation({ navLinks = [
       >
         <div className="w-full px-6 lg:px-12 flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center group" aria-label={t("The Frogs Guesthouse Home", "Αρχική Σελίδα The Frogs Guesthouse")}>
+          <Link href="/" className="flex items-center group" aria-label={t("The Frogs Guesthouse Home", "Αρχική Σελίδα The Frogs Guesthouse")} title={t("The Frogs Guesthouse Home", "Αρχική Σελίδα The Frogs Guesthouse")}>
+            <span className="sr-only">{t("The Frogs Guesthouse Home", "Αρχική Σελίδα The Frogs Guesthouse")}</span>
             <div className="h-10 relative flex items-center">
               <Image
                 src="/the-frogs.svg"
@@ -204,7 +205,7 @@ export default function Navigation({ navLinks = [
               onClick={() => setLanguage('EN')}
               className={`px-4 py-2 rounded-full border transition-all ${language === 'EN'
                 ? 'border-frogs-gold text-frogs-gold'
-                : 'border-frogs-border/30 text-frogs-text-light/50'
+                : 'border-frogs-border/40 text-frogs-text-light/80'
                 }`}
             >
               🇬🇧 EN
@@ -213,7 +214,7 @@ export default function Navigation({ navLinks = [
               onClick={() => setLanguage('GR')}
               className={`px-4 py-2 rounded-full border transition-all ${language === 'GR'
                 ? 'border-frogs-gold text-frogs-gold'
-                : 'border-frogs-border/30 text-frogs-text-light/50'
+                : 'border-frogs-border/40 text-frogs-text-light/80'
                 }`}
             >
               🇬🇷 GR
@@ -235,7 +236,7 @@ export default function Navigation({ navLinks = [
           </a>
 
           <div
-            className="flex items-center gap-2 text-frogs-text-light/60 mt-8"
+            className="flex items-center gap-2 text-frogs-text-light/80 mt-8"
             style={{
               transitionDelay: isMobileMenuOpen ? '400ms' : '0ms',
               transform: isMobileMenuOpen ? 'translateY(0)' : 'translateY(20px)',

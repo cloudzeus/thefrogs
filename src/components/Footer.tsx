@@ -67,7 +67,8 @@ export default function Footer({ legalPages = [] }: { legalPages?: LegalPageItem
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-16">
             {/* Brand Column */}
             <div className="footer-col lg:col-span-1">
-              <Link href="/" className="inline-block mb-6" aria-label={t("The Frogs Guesthouse Home", "Αρχική Σελίδα The Frogs Guesthouse")}>
+              <Link href="/" className="inline-block mb-6" aria-label={t("The Frogs Guesthouse Home", "Αρχική Σελίδα The Frogs Guesthouse")} title={t("The Frogs Guesthouse Home", "Αρχική Σελίδα The Frogs Guesthouse")}>
+                <span className="sr-only">{t("The Frogs Guesthouse Home", "Αρχική Σελίδα The Frogs Guesthouse")}</span>
                 <div className="h-16 relative flex items-center">
                   <img
                     src="/the-frogs.svg"
@@ -89,7 +90,9 @@ export default function Footer({ legalPages = [] }: { legalPages?: LegalPageItem
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded-full border border-frogs-border/20 flex items-center justify-center text-frogs-text-light/80 hover:border-frogs-gold hover:text-frogs-gold hover:bg-frogs-gold/10 transition-all duration-300"
                   aria-label={t("Instagram (opens in new tab)", "Instagram (ανοίγει σε νέα καρτέλα)")}
+                  title="Instagram"
                 >
+                  <span className="sr-only">Instagram</span>
                   <Instagram className="w-4 h-4" aria-hidden="true" />
                 </a>
                 <a
@@ -98,7 +101,9 @@ export default function Footer({ legalPages = [] }: { legalPages?: LegalPageItem
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded-full border border-frogs-border/20 flex items-center justify-center text-frogs-text-light/80 hover:border-frogs-gold hover:text-frogs-gold hover:bg-frogs-gold/10 transition-all duration-300"
                   aria-label={t("Facebook (opens in new tab)", "Facebook (ανοίγει σε νέα καρτέλα)")}
+                  title="Facebook"
                 >
+                  <span className="sr-only">Facebook</span>
                   <Facebook className="w-4 h-4" aria-hidden="true" />
                 </a>
                 <a
@@ -107,7 +112,9 @@ export default function Footer({ legalPages = [] }: { legalPages?: LegalPageItem
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded-full border border-frogs-border/20 flex items-center justify-center text-frogs-text-light/80 hover:border-frogs-gold hover:text-frogs-gold hover:bg-frogs-gold/10 transition-all duration-300"
                   aria-label={t("WhatsApp (opens in new tab)", "WhatsApp (ανοίγει σε νέα καρτέλα)")}
+                  title="WhatsApp"
                 >
+                  <span className="sr-only">WhatsApp</span>
                   <MessageCircle className="w-4 h-4" aria-hidden="true" />
                 </a>
               </div>
