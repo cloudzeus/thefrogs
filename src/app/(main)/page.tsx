@@ -38,7 +38,7 @@ export default async function Home() {
   const faqSchema = buildFaqSchema(faqQuestions);
 
   return (
-    <main className="relative">
+    <main className="relative pb-16 md:pb-24 lg:pb-28">
       {/* JSON-LD: LodgingBusiness (every page) */}
       <script
         type="application/ld+json"
@@ -84,6 +84,22 @@ export default async function Home() {
               return null;
           }
         })}
+
+      {/* Sticky Banner (ESPA) */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 p-4 pointer-events-none flex justify-center items-end drop-shadow-xl">
+        <a 
+          href="https://thefrogs.b-cdn.net/frogsEspa_01.pdf" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="pointer-events-auto block transition-transform hover:scale-[1.02]"
+        >
+          <img 
+            src="https://thefrogs.b-cdn.net/frogsEspa02.jpg" 
+            alt="Funding Banner" 
+            className="h-8 md:h-12 lg:h-14 w-auto object-contain rounded-md"
+          />
+        </a>
+      </div>
     </main>
   );
 }
